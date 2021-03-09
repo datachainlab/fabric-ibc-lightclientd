@@ -7,6 +7,7 @@ import "ibc/core/channel/v1/channel.proto";
 import "ibc/core/commitment/v1/commitment.proto";
 import "ibc/lightclients/fabric/v1/fabric.proto";
 import "proofs.proto"; // github.com/confio/ics23/proofs.proto
+import "google/protobuf/empty.proto";
 
 option go_package = "github.com/datachainlab/fabric-ibc-lightclientd/types";
 
@@ -16,32 +17,26 @@ message State {
   map<uint64, ibc.lightclients.fabric.v1.ConsensusState> consensus_states = 2;
 }
 
-// TODO: replace this with Google's google.rpc.Status ( https://github.com/googleapis/googleapis/blob/master/google/rpc/status.proto )
-// Error
-message Error {
-  string error = 1;
-}
-
 service LightClient {
   rpc ClientType(ClientTypeRequest) returns (ClientTypeResponse);
   rpc GetLatestHeight(GetLatestHeightRequest) returns (GetLatestHeightResponse);
   rpc IsFrozen(IsFrozenRequest) returns (IsFrozenResponse);
   rpc GetFrozenHeight(GetFrozenHeightRequest) returns (GetFrozenHeightResponse);
-  rpc Validate(ValidateRequest) returns (ValidateResponse);
+  rpc Validate(ValidateRequest) returns (google.protobuf.Empty);
   rpc GetProofSpecs(GetProofSpecsRequest) returns (GetProofSpecsResponse);
   rpc CheckHeaderAndUpdateState(CheckHeaderAndUpdateStateRequest) returns (CheckHeaderAndUpdateStateResponse);
   //rpc CheckMisbehaviourAndUpdateState(CheckMisbehaviourAndUpdateStateRequest) returns (CheckMisbehaviourAndUpdateStateResponse);
   rpc CheckProposedHeaderAndUpdateState(CheckProposedHeaderAndUpdateStateRequest) returns (CheckProposedHeaderAndUpdateStateResponse);
-  rpc VerifyUpgrade(VerifyUpgradeRequest) returns (VerifyUpgradeResponse);
+  rpc VerifyUpgrade(VerifyUpgradeRequest) returns (google.protobuf.Empty);
   rpc ZeroCustomFields(ZeroCustomFieldsRequest) returns (ZeroCustomFieldsResponse);
-  rpc VerifyClientState(VerifyClientStateRequest) returns (VerifyClientStateResponse);
-  rpc VerifyClientConsensusState(VerifyClientConsensusStateRequest) returns (VerifyClientConsensusStateResponse);
-  rpc VerifyConnectionState(VerifyConnectionStateRequest) returns (VerifyConnectionStateResponse);
-  rpc VerifyChannelState(VerifyChannelStateRequest) returns (VerifyChannelStateResponse);
-  rpc VerifyPacketCommitment(VerifyPacketCommitmentRequest) returns (VerifyPacketCommitmentResponse);
-  rpc VerifyPacketAcknowledgement(VerifyPacketAcknowledgementRequest) returns (VerifyPacketAcknowledgementResponse);
-  rpc VerifyPacketReceiptAbsence(VerifyPacketReceiptAbsenceRequest) returns (VerifyPacketReceiptAbsenceResponse);
-  rpc VerifyNextSequenceRecv(VerifyNextSequenceRecvRequest) returns (VerifyNextSequenceRecvResponse);
+  rpc VerifyClientState(VerifyClientStateRequest) returns (google.protobuf.Empty);
+  rpc VerifyClientConsensusState(VerifyClientConsensusStateRequest) returns (google.protobuf.Empty);
+  rpc VerifyConnectionState(VerifyConnectionStateRequest) returns (google.protobuf.Empty);
+  rpc VerifyChannelState(VerifyChannelStateRequest) returns (google.protobuf.Empty);
+  rpc VerifyPacketCommitment(VerifyPacketCommitmentRequest) returns (google.protobuf.Empty);
+  rpc VerifyPacketAcknowledgement(VerifyPacketAcknowledgementRequest) returns (google.protobuf.Empty);
+  rpc VerifyPacketReceiptAbsence(VerifyPacketReceiptAbsenceRequest) returns (google.protobuf.Empty);
+  rpc VerifyNextSequenceRecv(VerifyNextSequenceRecvRequest) returns (google.protobuf.Empty);
 }
 
 // rpc ClientType
@@ -80,9 +75,6 @@ message GetFrozenHeightResponse {
 message ValidateRequest {
   State state = 1;
 }
-message ValidateResponse {
-  Error error = 1;
-}
 
 // rpc GetProofSpecs
 message GetProofSpecsRequest {
@@ -99,7 +91,6 @@ message CheckHeaderAndUpdateStateRequest {
 }
 message CheckHeaderAndUpdateStateResponse {
   State state = 1;
-  Error error = 2;
 }
 
 // rpc CheckProposedHeaderAndUpdateState(header exported.Header) returns ((exported.ClientState, exported.ConsensusState, error))
@@ -109,7 +100,6 @@ message CheckProposedHeaderAndUpdateStateRequest {
 }
 message CheckProposedHeaderAndUpdateStateResponse {
   State state = 1;
-  Error error = 2;
 }
 
 // rpc VerifyUpgrade
@@ -118,9 +108,6 @@ message VerifyUpgradeRequest {
   ibc.lightclients.fabric.v1.ClientState new_client = 2;
   ibc.core.client.v1.Height upgrade_height = 3;
   bytes proof_upgrade = 4;
-}
-message VerifyUpgradeResponse {
-  Error error = 1;
 }
 
 // rpc ZeroCustomFields
@@ -140,9 +127,6 @@ message VerifyClientStateRequest {
   bytes proof = 5;
   ibc.lightclients.fabric.v1.ClientState client_state = 6;
 }
-message VerifyClientStateResponse {
-  Error error = 1;
-}
 
 // rpc VerifyClientConsensusState
 message VerifyClientConsensusStateRequest {
@@ -154,9 +138,6 @@ message VerifyClientConsensusStateRequest {
   bytes proof = 6;
   ibc.lightclients.fabric.v1.ConsensusState consensus_state = 7;
 }
-message VerifyClientConsensusStateResponse {
-  Error error = 1;
-}
 
 // rpc VerifyConnectionState
 message VerifyConnectionStateRequest {
@@ -166,9 +147,6 @@ message VerifyConnectionStateRequest {
   bytes proof = 4;
   string connection_id = 5;
   ibc.core.connection.v1.ConnectionEnd connection_end = 6;
-}
-message VerifyConnectionStateResponse {
-  Error error = 1;
 }
 
 // rpc VerifyChannelState
@@ -180,9 +158,6 @@ message VerifyChannelStateRequest {
   string port_id = 5;
   string channel_id = 6;
   ibc.core.channel.v1.Channel channel = 7;
-}
-message VerifyChannelStateResponse {
-  Error error = 1;
 }
 
 // rpc VerifyPacketCommitment
@@ -196,9 +171,6 @@ message VerifyPacketCommitmentRequest {
   uint64 sequence = 7;
   bytes commitment_bytes = 8;
 }
-message VerifyPacketCommitmentResponse {
-  Error error = 1;
-}
 
 // rpc VerifyPacketAcknowledgement
 message VerifyPacketAcknowledgementRequest {
@@ -211,9 +183,6 @@ message VerifyPacketAcknowledgementRequest {
   uint64 sequence = 7;
   bytes acknowledgement = 8;
 }
-message VerifyPacketAcknowledgementResponse {
-  Error error = 1;
-}
 
 // rpc VerifyPacketReceiptAbsence
 message VerifyPacketReceiptAbsenceRequest {
@@ -225,9 +194,6 @@ message VerifyPacketReceiptAbsenceRequest {
   string channel_id = 6;
   uint64 sequence = 7;
 }
-message VerifyPacketReceiptAbsenceResponse {
-  Error error = 1;
-}
 
 // rpc VerifyNextSequenceRecv
 message VerifyNextSequenceRecvRequest {
@@ -238,7 +204,4 @@ message VerifyNextSequenceRecvRequest {
   string port_id = 5;
   string channel_id = 6;
   uint64 next_sequence_recv = 7;
-}
-message VerifyNextSequenceRecvResponse {
-  Error error = 1;
 }
