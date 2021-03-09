@@ -11,6 +11,7 @@ import (
 	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
 	commitmenttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/23-commitment/types"
 	host "github.com/cosmos/cosmos-sdk/x/ibc/core/24-host"
+	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
 	fabrictypes "github.com/datachainlab/fabric-ibc/x/ibc/light-clients/xx-fabric/types"
 )
 
@@ -21,7 +22,7 @@ type Lightclient struct {
 	cs    *fabrictypes.ClientState
 }
 
-func NewLightclient(clientState *fabrictypes.ClientState, consensusState *fabrictypes.ConsensusState) *Lightclient {
+func NewLightclient(state *pb.State) *Lightclient {
 	// create dummy context
 	ctx := sdk.Context{}
 
@@ -31,12 +32,13 @@ func NewLightclient(clientState *fabrictypes.ClientState, consensusState *fabric
 	// create store
 	store := mem.NewStore()
 
-	// save consensus state in store
-	if bz, err := clienttypes.MarshalConsensusState(cdc, consensusState); err != nil {
-		panic(err)
-	} else {
-		height := clientState.GetLatestHeight()
-		store.Set(host.KeyConsensusState(height), bz)
+	// save consensus states in store
+	for height, consensusState := range state.ConsensusStates {
+		if bz, err := clienttypes.MarshalConsensusState(cdc, consensusState); err != nil {
+			panic(err)
+		} else {
+			store.Set(host.KeyConsensusState(clienttypes.NewHeight(0, height)), bz)
+		}
 	}
 
 	// create lightclient core
@@ -44,7 +46,7 @@ func NewLightclient(clientState *fabrictypes.ClientState, consensusState *fabric
 		ctx:   ctx,
 		store: store,
 		cdc:   cdc,
-		cs:    clientState,
+		cs:    state.ClientState,
 	}
 }
 

@@ -13,7 +13,7 @@ option go_package = "github.com/datachainlab/fabric-ibc-lightclientd/types";
 // State
 message State {
   ibc.lightclients.fabric.v1.ClientState client_state = 1;
-  map<string, ibc.lightclients.fabric.v1.ConsensusState> consensus_states = 2;
+  map<uint64, ibc.lightclients.fabric.v1.ConsensusState> consensus_states = 2;
 }
 
 // TODO: replace this with Google's google.rpc.Status ( https://github.com/googleapis/googleapis/blob/master/google/rpc/status.proto )
