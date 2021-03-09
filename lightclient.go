@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+	"strings"
+
 	ics23 "github.com/confio/ics23/go"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -22,32 +25,52 @@ type Lightclient struct {
 	cs    *fabrictypes.ClientState
 }
 
+func mustParseKeyConsensusState(key []byte) clienttypes.Height {
+	words := strings.Split(string(key), "/")
+	if len(words) != 2 || words[0] != string(host.KeyConsensusStatesPrefix) {
+		log.Fatalf("failed to split consensus state key: %v", key)
+	}
+	return clienttypes.MustParseHeight(words[1])
+}
+
+func (lc *Lightclient) State() *pb.State {
+	state := &pb.State{
+		ClientState:     lc.cs,
+		ConsensusStates: make(map[uint64]*fabrictypes.ConsensusState),
+	}
+	it := lc.store.Iterator(nil, nil)
+	defer it.Close()
+	for it.Valid() {
+		height := mustParseKeyConsensusState(it.Key()).GetVersionHeight()
+		consensusState := clienttypes.MustUnmarshalConsensusState(lc.cdc, it.Value()).(*fabrictypes.ConsensusState)
+		state.ConsensusStates[height] = consensusState
+		it.Next()
+	}
+	return state
+}
+
+func (lc *Lightclient) saveConsensusState(height uint64, consensusState *fabrictypes.ConsensusState) {
+	lc.store.Set(
+		host.KeyConsensusState(clienttypes.NewHeight(0, height)),
+		clienttypes.MustMarshalConsensusState(lc.cdc, consensusState),
+	)
+}
+
 func NewLightclient(state *pb.State) *Lightclient {
-	// create dummy context
-	ctx := sdk.Context{}
-
-	// create codec
-	cdc := codec.NewProtoCodec(codectypes.NewInterfaceRegistry())
-
-	// create store
-	store := mem.NewStore()
+	lc := &Lightclient{
+		ctx:   sdk.Context{},
+		cdc:   codec.NewProtoCodec(codectypes.NewInterfaceRegistry()),
+		store: mem.NewStore(),
+		cs:    state.ClientState,
+	}
 
 	// save consensus states in store
 	for height, consensusState := range state.ConsensusStates {
-		if bz, err := clienttypes.MarshalConsensusState(cdc, consensusState); err != nil {
-			panic(err)
-		} else {
-			store.Set(host.KeyConsensusState(clienttypes.NewHeight(0, height)), bz)
-		}
+		lc.saveConsensusState(height, consensusState)
 	}
 
 	// create lightclient core
-	return &Lightclient{
-		ctx:   ctx,
-		store: store,
-		cdc:   cdc,
-		cs:    state.ClientState,
-	}
+	return lc
 }
 
 func (lc *Lightclient) ClientType() string {
@@ -74,9 +97,14 @@ func (lc *Lightclient) GetProofSpecs() []*ics23.ProofSpec {
 	return lc.cs.GetProofSpecs()
 }
 
-func (lc *Lightclient) CheckHeaderAndUpdateState(header *fabrictypes.Header) (*fabrictypes.ClientState, *fabrictypes.ConsensusState, error) {
+func (lc *Lightclient) CheckHeaderAndUpdateState(header *fabrictypes.Header) error {
 	clientState, consensusState, err := lc.cs.CheckHeaderAndUpdateState(lc.ctx, lc.cdc, lc.store, header)
-	return clientState.(*fabrictypes.ClientState), consensusState.(*fabrictypes.ConsensusState), err
+	if err != nil {
+		return err
+	}
+	lc.cs = clientState.(*fabrictypes.ClientState)
+	lc.saveConsensusState(header.ChaincodeHeader.Sequence.Value, consensusState.(*fabrictypes.ConsensusState))
+	return nil
 }
 
 // TODO: define fabrictypes.Misbehaviour
@@ -87,9 +115,14 @@ func (lc *Lightclient) CheckMisbehaviourAndUpdateState(misbehaviour *fabrictypes
 }
 */
 
-func (lc *Lightclient) CheckProposedHeaderAndUpdateState(header *fabrictypes.Header) (*fabrictypes.ClientState, *fabrictypes.ConsensusState, error) {
+func (lc *Lightclient) CheckProposedHeaderAndUpdateState(header *fabrictypes.Header) error {
 	clientState, consensusState, err := lc.cs.CheckProposedHeaderAndUpdateState(lc.ctx, lc.cdc, lc.store, header)
-	return clientState.(*fabrictypes.ClientState), consensusState.(*fabrictypes.ConsensusState), err
+	if err != nil {
+		return err
+	}
+	lc.cs = clientState.(*fabrictypes.ClientState)
+	lc.saveConsensusState(header.ChaincodeHeader.Sequence.Value, consensusState.(*fabrictypes.ConsensusState))
+	return nil
 }
 
 func (lc *Lightclient) VerifyUpgrade(
