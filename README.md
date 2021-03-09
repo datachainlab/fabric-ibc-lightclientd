@@ -9,5 +9,5 @@ By using this internally, IBC implementers can easily write ClientState for Fabr
 A main body of IBC implementation just have to have a shim layer of this.
 
 ```
-$ fabric-ibc-lightclientd --port 60000
+$ fabric-ibc-lightclientd -port 60000
 ```

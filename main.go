@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"net"
 
@@ -9,10 +11,15 @@ import (
 	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
 )
 
-const address = ":60000"
+var port uint
+
+func init() {
+	flag.UintVar(&port, "port", 60000, "port to listen on")
+	flag.Parse()
+}
 
 func main() {
-	lis, err := net.Listen("tcp", address)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
