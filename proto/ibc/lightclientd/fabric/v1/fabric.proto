@@ -6,7 +6,7 @@ import "ibc/core/connection/v1/connection.proto";
 import "ibc/core/channel/v1/channel.proto";
 import "ibc/core/commitment/v1/commitment.proto";
 import "ibc/lightclients/fabric/v1/fabric.proto";
-import "proofs.proto"; // github.com/confio/ics23/proofs.proto
+import "confio/proofs.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/datachainlab/fabric-ibc-lightclientd/types";

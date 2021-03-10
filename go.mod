@@ -3,7 +3,6 @@ module github.com/datachainlab/fabric-ibc-lightclientd
 go 1.16
 
 require (
-	github.com/confio/ics23 v0.6.3 // indirect
 	github.com/confio/ics23/go v0.6.3
 	github.com/cosmos/cosmos-sdk v0.40.0-rc3
 	github.com/datachainlab/fabric-ibc v0.0.0-20210118090849-c2eaee7a3314

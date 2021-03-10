@@ -3,7 +3,6 @@
 set -eo pipefail
 
 cosmos_dir=$(go list -f '{{.Dir}}' -m github.com/cosmos/cosmos-sdk)
-ics23_dir=$(go list -f '{{.Dir}}' -m github.com/confio/ics23)
 fabibc_dir=$(go list -f '{{.Dir}}' -m github.com/datachainlab/fabric-ibc)
 
 proto_dirs=$(find ./proto -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
@@ -12,7 +11,6 @@ for dir in $proto_dirs; do
   -I "proto" \
   -I "$cosmos_dir/proto" \
   -I "$cosmos_dir/third_party/proto" \
-  -I "$ics23_dir" \
   -I "$fabibc_dir/proto" \
   -I "$fabibc_dir/third_party/proto" \
   --gocosmos_opt=Mproofs.proto=github.com/confio/ics23/go \
