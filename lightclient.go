@@ -6,7 +6,6 @@ import (
 
 	ics23 "github.com/confio/ics23/go"
 	"github.com/cosmos/cosmos-sdk/codec"
-	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/store/mem"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
@@ -15,6 +14,7 @@ import (
 	commitmenttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/23-commitment/types"
 	host "github.com/cosmos/cosmos-sdk/x/ibc/core/24-host"
 	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
+	"github.com/datachainlab/fabric-ibc/example"
 	fabrictypes "github.com/datachainlab/fabric-ibc/x/ibc/light-clients/xx-fabric/types"
 )
 
@@ -61,7 +61,7 @@ func (lc *Lightclient) saveConsensusState(height uint64, consensusState *fabrict
 func NewLightclient(state *pb.State) *Lightclient {
 	lc := &Lightclient{
 		ctx:   sdk.Context{},
-		cdc:   codec.NewProtoCodec(codectypes.NewInterfaceRegistry()),
+		cdc:   example.MakeEncodingConfig().Marshaler,
 		store: mem.NewStore(),
 		id:    state.Id,
 		cs:    state.ClientState,
