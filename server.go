@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
+	"github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -73,8 +73,8 @@ func (server) ZeroCustomFields(_ context.Context, req *pb.ZeroCustomFieldsReques
 
 func (server) VerifyClientState(_ context.Context, req *pb.VerifyClientStateRequest) (*emptypb.Empty, error) {
 	lc := NewLightclient(req.State)
-	clientState, err := clienttypes.UnpackClientState(req.ClientState)
-	if err != nil {
+	var clientState exported.ClientState
+	if err := lc.cdc.UnpackAny(req.ClientState, &clientState); err != nil {
 		return nil, err
 	}
 	return &empty.Empty{}, lc.VerifyClientState(*req.Height, req.Prefix, req.CounterpartyClientIdentifier, req.Proof, clientState)
@@ -82,8 +82,8 @@ func (server) VerifyClientState(_ context.Context, req *pb.VerifyClientStateRequ
 
 func (server) VerifyClientConsensusState(_ context.Context, req *pb.VerifyClientConsensusStateRequest) (*emptypb.Empty, error) {
 	lc := NewLightclient(req.State)
-	consensusState, err := clienttypes.UnpackConsensusState(req.ConsensusState)
-	if err != nil {
+	var consensusState exported.ConsensusState
+	if err := lc.cdc.UnpackAny(req.ConsensusState, &consensusState); err != nil {
 		return nil, err
 	}
 	return &empty.Empty{}, lc.VerifyClientConsensusState(*req.Height, req.CounterpartyClientIdentifier, *req.ConsensusHeight, req.Prefix, req.Proof, consensusState)
