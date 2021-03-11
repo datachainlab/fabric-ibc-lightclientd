@@ -13,6 +13,7 @@ import (
 	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
 	commitmenttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/23-commitment/types"
 	host "github.com/cosmos/cosmos-sdk/x/ibc/core/24-host"
+	"github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
 	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
 	"github.com/datachainlab/fabric-ibc/example"
 	fabrictypes "github.com/datachainlab/fabric-ibc/x/ibc/light-clients/xx-fabric/types"
@@ -145,7 +146,7 @@ func (lc *Lightclient) VerifyClientState(
 	prefix *commitmenttypes.MerklePrefix,
 	counterpartyClientIdentifier string,
 	proof []byte,
-	clientState *fabrictypes.ClientState,
+	clientState exported.ClientState,
 ) error {
 	return lc.cs.VerifyClientState(lc.store, lc.cdc, height, prefix, counterpartyClientIdentifier, proof, clientState)
 }
@@ -156,7 +157,7 @@ func (lc *Lightclient) VerifyClientConsensusState(
 	consensusHeight clienttypes.Height,
 	prefix *commitmenttypes.MerklePrefix,
 	proof []byte,
-	consensusState *fabrictypes.ConsensusState,
+	consensusState exported.ConsensusState,
 ) error {
 	return lc.cs.VerifyClientConsensusState(lc.store, lc.cdc, height, counterpartyClientIdentifier, consensusHeight, prefix, proof, consensusState)
 }

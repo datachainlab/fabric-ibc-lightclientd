@@ -8,6 +8,7 @@ import "ibc/core/commitment/v1/commitment.proto";
 import "ibc/lightclients/fabric/v1/fabric.proto";
 import "confio/proofs.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
 
 option go_package = "github.com/datachainlab/fabric-ibc-lightclientd/types";
 
@@ -126,7 +127,7 @@ message VerifyClientStateRequest {
   ibc.core.commitment.v1.MerklePrefix prefix = 3;
   string counterparty_client_identifier = 4;
   bytes proof = 5;
-  ibc.lightclients.fabric.v1.ClientState client_state = 6;
+  google.protobuf.Any client_state = 6;
 }
 
 // rpc VerifyClientConsensusState
@@ -137,7 +138,7 @@ message VerifyClientConsensusStateRequest {
   ibc.core.client.v1.Height consensus_height = 4;
   ibc.core.commitment.v1.MerklePrefix prefix = 5;
   bytes proof = 6;
-  ibc.lightclients.fabric.v1.ConsensusState consensus_state = 7;
+  google.protobuf.Any consensus_state = 7;
 }
 
 // rpc VerifyConnectionState
