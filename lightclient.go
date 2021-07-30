@@ -8,20 +8,20 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/store/mem"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	clienttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
-	connectiontypes "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
-	channeltypes "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
-	commitmenttypes "github.com/cosmos/cosmos-sdk/x/ibc/core/23-commitment/types"
-	host "github.com/cosmos/cosmos-sdk/x/ibc/core/24-host"
-	"github.com/cosmos/cosmos-sdk/x/ibc/core/exported"
+	clienttypes "github.com/cosmos/ibc-go/modules/core/02-client/types"
+	connectiontypes "github.com/cosmos/ibc-go/modules/core/03-connection/types"
+	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
+	commitmenttypes "github.com/cosmos/ibc-go/modules/core/23-commitment/types"
+	host "github.com/cosmos/ibc-go/modules/core/24-host"
+	"github.com/cosmos/ibc-go/modules/core/exported"
 	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
-	"github.com/datachainlab/fabric-ibc/example"
-	fabrictypes "github.com/datachainlab/fabric-ibc/x/ibc/light-clients/xx-fabric/types"
+	"github.com/hyperledger-labs/yui-fabric-ibc/example"
+	fabrictypes "github.com/hyperledger-labs/yui-fabric-ibc/x/ibc/light-clients/xx-fabric/types"
 )
 
 type Lightclient struct {
 	ctx   sdk.Context
-	cdc   codec.BinaryMarshaler
+	cdc   codec.BinaryCodec
 	store sdk.KVStore
 	id    string
 	cs    *fabrictypes.ClientState
@@ -29,7 +29,7 @@ type Lightclient struct {
 
 func mustParseKeyConsensusState(key []byte) clienttypes.Height {
 	words := strings.Split(string(key), "/")
-	if len(words) != 2 || words[0] != string(host.KeyConsensusStatesPrefix) {
+	if len(words) != 2 || words[0] != string(host.KeyConsensusStatePrefix) {
 		log.Fatalf("failed to split consensus state key: %v", key)
 	}
 	return clienttypes.MustParseHeight(words[1])
@@ -44,7 +44,7 @@ func (lc *Lightclient) State() *pb.State {
 	it := lc.store.Iterator(nil, nil)
 	defer it.Close()
 	for it.Valid() {
-		height := mustParseKeyConsensusState(it.Key()).GetVersionHeight()
+		height := mustParseKeyConsensusState(it.Key()).GetRevisionHeight()
 		consensusState := clienttypes.MustUnmarshalConsensusState(lc.cdc, it.Value()).(*fabrictypes.ConsensusState)
 		state.ConsensusStates[height] = consensusState
 		it.Next()
@@ -54,7 +54,7 @@ func (lc *Lightclient) State() *pb.State {
 
 func (lc *Lightclient) saveConsensusState(height uint64, consensusState *fabrictypes.ConsensusState) {
 	lc.store.Set(
-		host.KeyConsensusState(clienttypes.NewHeight(0, height)),
+		host.ConsensusStateKey(clienttypes.NewHeight(0, height)),
 		clienttypes.MustMarshalConsensusState(lc.cdc, consensusState),
 	)
 }
@@ -85,20 +85,28 @@ func (lc *Lightclient) GetLatestHeight() clienttypes.Height {
 	return lc.cs.GetLatestHeight().(clienttypes.Height)
 }
 
-func (lc *Lightclient) IsFrozen() bool {
-	return lc.cs.IsFrozen()
-}
-
-func (lc *Lightclient) GetFrozenHeight() clienttypes.Height {
-	return lc.cs.GetFrozenHeight().(clienttypes.Height)
-}
-
 func (lc *Lightclient) Validate() error {
 	return lc.cs.Validate()
 }
 
 func (lc *Lightclient) GetProofSpecs() []*ics23.ProofSpec {
 	return lc.cs.GetProofSpecs()
+}
+
+func (lc *Lightclient) Initialize(consState *fabrictypes.ConsensusState) error {
+	return lc.cs.Initialize(lc.ctx, lc.cdc, lc.store, consState)
+}
+
+func (lc *Lightclient) Status() exported.Status {
+	return lc.cs.Status(lc.ctx, lc.store, lc.cdc)
+}
+
+func (lc *Lightclient) ExportMetadata() []*clienttypes.GenesisMetadata {
+	gm := lc.cs.ExportMetadata(lc.store)
+	if gm != nil {
+		panic("this function should return nil")
+	}
+	return nil
 }
 
 func (lc *Lightclient) CheckHeaderAndUpdateState(header *fabrictypes.Header) error {
@@ -111,30 +119,17 @@ func (lc *Lightclient) CheckHeaderAndUpdateState(header *fabrictypes.Header) err
 	return nil
 }
 
-// TODO: define fabrictypes.Misbehaviour
-/*
-func (lc *Lightclient) CheckMisbehaviourAndUpdateState(misbehaviour *fabrictypes.Misbehaviour) (*fabrictypes.ClientState, error) {
-	clientState, err := lc.cs.CheckMisbehaviourAndUpdateState(lc.ctx, lc.cdc, lc.store, misbehaviour)
-	return clientState.(*fabrictypes.ClientState), err
-}
-*/
-
-func (lc *Lightclient) CheckProposedHeaderAndUpdateState(header *fabrictypes.Header) error {
-	clientState, consensusState, err := lc.cs.CheckProposedHeaderAndUpdateState(lc.ctx, lc.cdc, lc.store, header)
-	if err != nil {
-		return err
-	}
-	lc.cs = clientState.(*fabrictypes.ClientState)
-	lc.saveConsensusState(header.ChaincodeHeader.Sequence.Value, consensusState.(*fabrictypes.ConsensusState))
-	return nil
-}
-
-func (lc *Lightclient) VerifyUpgrade(
+func (lc *Lightclient) VerifyUpgradeAndUpdateState(
 	newClient *fabrictypes.ClientState,
-	upgradeHeight clienttypes.Height,
-	proofUpgrade []byte,
+	newConsState *fabrictypes.ConsensusState,
+	proofUpgradeClient []byte,
+	proofUpgradeConsState []byte,
 ) error {
-	return lc.cs.VerifyUpgrade(lc.ctx, lc.cdc, lc.store, newClient, upgradeHeight, proofUpgrade)
+	_, _, err := lc.cs.VerifyUpgradeAndUpdateState(lc.ctx, lc.cdc, lc.store, newClient, newConsState, proofUpgradeClient, proofUpgradeConsState)
+	if err == nil {
+		panic("this function should return an error")
+	}
+	return err
 }
 
 func (lc *Lightclient) ZeroCustomFields() *fabrictypes.ClientState {
@@ -185,6 +180,8 @@ func (lc *Lightclient) VerifyChannelState(
 
 func (lc *Lightclient) VerifyPacketCommitment(
 	height clienttypes.Height,
+	delayTimePeriod uint64,
+	delayBlockPeriod uint64,
 	prefix *commitmenttypes.MerklePrefix,
 	proof []byte,
 	portID,
@@ -192,11 +189,13 @@ func (lc *Lightclient) VerifyPacketCommitment(
 	sequence uint64,
 	commitmentBytes []byte,
 ) error {
-	return lc.cs.VerifyPacketCommitment(lc.store, lc.cdc, height, prefix, proof, portID, channelID, sequence, commitmentBytes)
+	return lc.cs.VerifyPacketCommitment(lc.ctx, lc.store, lc.cdc, height, delayTimePeriod, delayBlockPeriod, prefix, proof, portID, channelID, sequence, commitmentBytes)
 }
 
 func (lc *Lightclient) VerifyPacketAcknowledgement(
 	height clienttypes.Height,
+	delayTimePeriod uint64,
+	delayBlockPeriod uint64,
 	prefix *commitmenttypes.MerklePrefix,
 	proof []byte,
 	portID,
@@ -204,27 +203,31 @@ func (lc *Lightclient) VerifyPacketAcknowledgement(
 	sequence uint64,
 	acknowledgement []byte,
 ) error {
-	return lc.cs.VerifyPacketAcknowledgement(lc.store, lc.cdc, height, prefix, proof, portID, channelID, sequence, acknowledgement)
+	return lc.cs.VerifyPacketAcknowledgement(lc.ctx, lc.store, lc.cdc, height, delayTimePeriod, delayBlockPeriod, prefix, proof, portID, channelID, sequence, acknowledgement)
 }
 
 func (lc *Lightclient) VerifyPacketReceiptAbsence(
 	height clienttypes.Height,
+	delayTimePeriod uint64,
+	delayBlockPeriod uint64,
 	prefix *commitmenttypes.MerklePrefix,
 	proof []byte,
 	portID,
 	channelID string,
 	sequence uint64,
 ) error {
-	return lc.cs.VerifyPacketReceiptAbsence(lc.store, lc.cdc, height, prefix, proof, portID, channelID, sequence)
+	return lc.cs.VerifyPacketReceiptAbsence(lc.ctx, lc.store, lc.cdc, height, delayTimePeriod, delayBlockPeriod, prefix, proof, portID, channelID, sequence)
 }
 
 func (lc *Lightclient) VerifyNextSequenceRecv(
 	height clienttypes.Height,
+	delayTimePeriod uint64,
+	delayBlockPeriod uint64,
 	prefix *commitmenttypes.MerklePrefix,
 	proof []byte,
 	portID,
 	channelID string,
 	nextSequenceRecv uint64,
 ) error {
-	return lc.cs.VerifyNextSequenceRecv(lc.store, lc.cdc, height, prefix, proof, portID, channelID, nextSequenceRecv)
+	return lc.cs.VerifyNextSequenceRecv(lc.ctx, lc.store, lc.cdc, height, delayTimePeriod, delayBlockPeriod, prefix, proof, portID, channelID, nextSequenceRecv)
 }

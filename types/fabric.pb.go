@@ -8,17 +8,17 @@ import (
 	fmt "fmt"
 	_go "github.com/confio/ics23/go"
 	types3 "github.com/cosmos/cosmos-sdk/codec/types"
-	types1 "github.com/cosmos/cosmos-sdk/x/ibc/core/02-client/types"
-	types4 "github.com/cosmos/cosmos-sdk/x/ibc/core/03-connection/types"
-	types5 "github.com/cosmos/cosmos-sdk/x/ibc/core/04-channel/types"
-	types2 "github.com/cosmos/cosmos-sdk/x/ibc/core/23-commitment/types"
-	types "github.com/datachainlab/fabric-ibc/x/ibc/light-clients/xx-fabric/types"
+	types1 "github.com/cosmos/ibc-go/modules/core/02-client/types"
+	types4 "github.com/cosmos/ibc-go/modules/core/03-connection/types"
+	types5 "github.com/cosmos/ibc-go/modules/core/04-channel/types"
+	types2 "github.com/cosmos/ibc-go/modules/core/23-commitment/types"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
-	empty "github.com/golang/protobuf/ptypes/empty"
+	types "github.com/hyperledger-labs/yui-fabric-ibc/x/ibc/light-clients/xx-fabric/types"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -274,184 +274,6 @@ func (m *GetLatestHeightResponse) GetHeight() *types1.Height {
 	return nil
 }
 
-// rpc IsFrozen
-type IsFrozenRequest struct {
-	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-}
-
-func (m *IsFrozenRequest) Reset()         { *m = IsFrozenRequest{} }
-func (m *IsFrozenRequest) String() string { return proto.CompactTextString(m) }
-func (*IsFrozenRequest) ProtoMessage()    {}
-func (*IsFrozenRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{5}
-}
-func (m *IsFrozenRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *IsFrozenRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_IsFrozenRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *IsFrozenRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IsFrozenRequest.Merge(m, src)
-}
-func (m *IsFrozenRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *IsFrozenRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_IsFrozenRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_IsFrozenRequest proto.InternalMessageInfo
-
-func (m *IsFrozenRequest) GetState() *State {
-	if m != nil {
-		return m.State
-	}
-	return nil
-}
-
-type IsFrozenResponse struct {
-	IsFrozen bool `protobuf:"varint,1,opt,name=is_frozen,json=isFrozen,proto3" json:"is_frozen,omitempty"`
-}
-
-func (m *IsFrozenResponse) Reset()         { *m = IsFrozenResponse{} }
-func (m *IsFrozenResponse) String() string { return proto.CompactTextString(m) }
-func (*IsFrozenResponse) ProtoMessage()    {}
-func (*IsFrozenResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{6}
-}
-func (m *IsFrozenResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *IsFrozenResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_IsFrozenResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *IsFrozenResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IsFrozenResponse.Merge(m, src)
-}
-func (m *IsFrozenResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *IsFrozenResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_IsFrozenResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_IsFrozenResponse proto.InternalMessageInfo
-
-func (m *IsFrozenResponse) GetIsFrozen() bool {
-	if m != nil {
-		return m.IsFrozen
-	}
-	return false
-}
-
-// rpc GetFrozenHeight
-type GetFrozenHeightRequest struct {
-	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-}
-
-func (m *GetFrozenHeightRequest) Reset()         { *m = GetFrozenHeightRequest{} }
-func (m *GetFrozenHeightRequest) String() string { return proto.CompactTextString(m) }
-func (*GetFrozenHeightRequest) ProtoMessage()    {}
-func (*GetFrozenHeightRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{7}
-}
-func (m *GetFrozenHeightRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetFrozenHeightRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetFrozenHeightRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetFrozenHeightRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetFrozenHeightRequest.Merge(m, src)
-}
-func (m *GetFrozenHeightRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetFrozenHeightRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetFrozenHeightRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetFrozenHeightRequest proto.InternalMessageInfo
-
-func (m *GetFrozenHeightRequest) GetState() *State {
-	if m != nil {
-		return m.State
-	}
-	return nil
-}
-
-type GetFrozenHeightResponse struct {
-	Height *types1.Height `protobuf:"bytes,1,opt,name=height,proto3" json:"height,omitempty"`
-}
-
-func (m *GetFrozenHeightResponse) Reset()         { *m = GetFrozenHeightResponse{} }
-func (m *GetFrozenHeightResponse) String() string { return proto.CompactTextString(m) }
-func (*GetFrozenHeightResponse) ProtoMessage()    {}
-func (*GetFrozenHeightResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{8}
-}
-func (m *GetFrozenHeightResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetFrozenHeightResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetFrozenHeightResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetFrozenHeightResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetFrozenHeightResponse.Merge(m, src)
-}
-func (m *GetFrozenHeightResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetFrozenHeightResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetFrozenHeightResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetFrozenHeightResponse proto.InternalMessageInfo
-
-func (m *GetFrozenHeightResponse) GetHeight() *types1.Height {
-	if m != nil {
-		return m.Height
-	}
-	return nil
-}
-
 // rpc Validate
 type ValidateRequest struct {
 	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
@@ -461,7 +283,7 @@ func (m *ValidateRequest) Reset()         { *m = ValidateRequest{} }
 func (m *ValidateRequest) String() string { return proto.CompactTextString(m) }
 func (*ValidateRequest) ProtoMessage()    {}
 func (*ValidateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{9}
+	return fileDescriptor_6967e85c342bf417, []int{5}
 }
 func (m *ValidateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -506,7 +328,7 @@ func (m *GetProofSpecsRequest) Reset()         { *m = GetProofSpecsRequest{} }
 func (m *GetProofSpecsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetProofSpecsRequest) ProtoMessage()    {}
 func (*GetProofSpecsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{10}
+	return fileDescriptor_6967e85c342bf417, []int{6}
 }
 func (m *GetProofSpecsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -550,7 +372,7 @@ func (m *GetProofSpecsResponse) Reset()         { *m = GetProofSpecsResponse{} }
 func (m *GetProofSpecsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetProofSpecsResponse) ProtoMessage()    {}
 func (*GetProofSpecsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{11}
+	return fileDescriptor_6967e85c342bf417, []int{7}
 }
 func (m *GetProofSpecsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -586,6 +408,281 @@ func (m *GetProofSpecsResponse) GetProofSpecs() []*_go.ProofSpec {
 	return nil
 }
 
+// rpc Initialize
+type InitializeRequest struct {
+	State          *State                `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	ConsensusState *types.ConsensusState `protobuf:"bytes,2,opt,name=consensus_state,json=consensusState,proto3" json:"consensus_state,omitempty"`
+}
+
+func (m *InitializeRequest) Reset()         { *m = InitializeRequest{} }
+func (m *InitializeRequest) String() string { return proto.CompactTextString(m) }
+func (*InitializeRequest) ProtoMessage()    {}
+func (*InitializeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{8}
+}
+func (m *InitializeRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *InitializeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_InitializeRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *InitializeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InitializeRequest.Merge(m, src)
+}
+func (m *InitializeRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *InitializeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_InitializeRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InitializeRequest proto.InternalMessageInfo
+
+func (m *InitializeRequest) GetState() *State {
+	if m != nil {
+		return m.State
+	}
+	return nil
+}
+
+func (m *InitializeRequest) GetConsensusState() *types.ConsensusState {
+	if m != nil {
+		return m.ConsensusState
+	}
+	return nil
+}
+
+type InitializeResponse struct {
+	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+}
+
+func (m *InitializeResponse) Reset()         { *m = InitializeResponse{} }
+func (m *InitializeResponse) String() string { return proto.CompactTextString(m) }
+func (*InitializeResponse) ProtoMessage()    {}
+func (*InitializeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{9}
+}
+func (m *InitializeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *InitializeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_InitializeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *InitializeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InitializeResponse.Merge(m, src)
+}
+func (m *InitializeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *InitializeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InitializeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InitializeResponse proto.InternalMessageInfo
+
+func (m *InitializeResponse) GetState() *State {
+	if m != nil {
+		return m.State
+	}
+	return nil
+}
+
+// rpc Status
+type StatusRequest struct {
+	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+}
+
+func (m *StatusRequest) Reset()         { *m = StatusRequest{} }
+func (m *StatusRequest) String() string { return proto.CompactTextString(m) }
+func (*StatusRequest) ProtoMessage()    {}
+func (*StatusRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{10}
+}
+func (m *StatusRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StatusRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StatusRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StatusRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StatusRequest.Merge(m, src)
+}
+func (m *StatusRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *StatusRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_StatusRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StatusRequest proto.InternalMessageInfo
+
+func (m *StatusRequest) GetState() *State {
+	if m != nil {
+		return m.State
+	}
+	return nil
+}
+
+type StatusResponse struct {
+	Status string `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+}
+
+func (m *StatusResponse) Reset()         { *m = StatusResponse{} }
+func (m *StatusResponse) String() string { return proto.CompactTextString(m) }
+func (*StatusResponse) ProtoMessage()    {}
+func (*StatusResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{11}
+}
+func (m *StatusResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StatusResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StatusResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StatusResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StatusResponse.Merge(m, src)
+}
+func (m *StatusResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *StatusResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_StatusResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StatusResponse proto.InternalMessageInfo
+
+func (m *StatusResponse) GetStatus() string {
+	if m != nil {
+		return m.Status
+	}
+	return ""
+}
+
+// rpc ExportMetadata
+type ExportMetadataRequest struct {
+	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+}
+
+func (m *ExportMetadataRequest) Reset()         { *m = ExportMetadataRequest{} }
+func (m *ExportMetadataRequest) String() string { return proto.CompactTextString(m) }
+func (*ExportMetadataRequest) ProtoMessage()    {}
+func (*ExportMetadataRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{12}
+}
+func (m *ExportMetadataRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ExportMetadataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ExportMetadataRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ExportMetadataRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExportMetadataRequest.Merge(m, src)
+}
+func (m *ExportMetadataRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ExportMetadataRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExportMetadataRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExportMetadataRequest proto.InternalMessageInfo
+
+func (m *ExportMetadataRequest) GetState() *State {
+	if m != nil {
+		return m.State
+	}
+	return nil
+}
+
+type ExportMetadataResponse struct {
+	GenesisMetadatas []*types1.GenesisMetadata `protobuf:"bytes,1,rep,name=genesis_metadatas,json=genesisMetadatas,proto3" json:"genesis_metadatas,omitempty"`
+}
+
+func (m *ExportMetadataResponse) Reset()         { *m = ExportMetadataResponse{} }
+func (m *ExportMetadataResponse) String() string { return proto.CompactTextString(m) }
+func (*ExportMetadataResponse) ProtoMessage()    {}
+func (*ExportMetadataResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{13}
+}
+func (m *ExportMetadataResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ExportMetadataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ExportMetadataResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ExportMetadataResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExportMetadataResponse.Merge(m, src)
+}
+func (m *ExportMetadataResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *ExportMetadataResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExportMetadataResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExportMetadataResponse proto.InternalMessageInfo
+
+func (m *ExportMetadataResponse) GetGenesisMetadatas() []*types1.GenesisMetadata {
+	if m != nil {
+		return m.GenesisMetadatas
+	}
+	return nil
+}
+
 // rpc CheckHeaderAndUpdateState
 type CheckHeaderAndUpdateStateRequest struct {
 	State  *State        `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
@@ -596,7 +693,7 @@ func (m *CheckHeaderAndUpdateStateRequest) Reset()         { *m = CheckHeaderAnd
 func (m *CheckHeaderAndUpdateStateRequest) String() string { return proto.CompactTextString(m) }
 func (*CheckHeaderAndUpdateStateRequest) ProtoMessage()    {}
 func (*CheckHeaderAndUpdateStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{12}
+	return fileDescriptor_6967e85c342bf417, []int{14}
 }
 func (m *CheckHeaderAndUpdateStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -647,7 +744,7 @@ func (m *CheckHeaderAndUpdateStateResponse) Reset()         { *m = CheckHeaderAn
 func (m *CheckHeaderAndUpdateStateResponse) String() string { return proto.CompactTextString(m) }
 func (*CheckHeaderAndUpdateStateResponse) ProtoMessage()    {}
 func (*CheckHeaderAndUpdateStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{13}
+	return fileDescriptor_6967e85c342bf417, []int{15}
 }
 func (m *CheckHeaderAndUpdateStateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -683,129 +780,27 @@ func (m *CheckHeaderAndUpdateStateResponse) GetState() *State {
 	return nil
 }
 
-// rpc CheckProposedHeaderAndUpdateState(header exported.Header) returns ((exported.ClientState, exported.ConsensusState, error))
-type CheckProposedHeaderAndUpdateStateRequest struct {
-	State  *State        `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-	Header *types.Header `protobuf:"bytes,2,opt,name=header,proto3" json:"header,omitempty"`
+// rpc VerifyUpgradeAndUpdateState
+type VerifyUpgradeAndUpdateStateRequest struct {
+	State                 *State                `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	NewClient             *types.ClientState    `protobuf:"bytes,2,opt,name=new_client,json=newClient,proto3" json:"new_client,omitempty"`
+	NewConsState          *types.ConsensusState `protobuf:"bytes,3,opt,name=new_cons_state,json=newConsState,proto3" json:"new_cons_state,omitempty"`
+	ProofUpgradeClient    []byte                `protobuf:"bytes,4,opt,name=proof_upgrade_client,json=proofUpgradeClient,proto3" json:"proof_upgrade_client,omitempty"`
+	ProofUpgradeConsState []byte                `protobuf:"bytes,5,opt,name=proof_upgrade_cons_state,json=proofUpgradeConsState,proto3" json:"proof_upgrade_cons_state,omitempty"`
 }
 
-func (m *CheckProposedHeaderAndUpdateStateRequest) Reset() {
-	*m = CheckProposedHeaderAndUpdateStateRequest{}
-}
-func (m *CheckProposedHeaderAndUpdateStateRequest) String() string { return proto.CompactTextString(m) }
-func (*CheckProposedHeaderAndUpdateStateRequest) ProtoMessage()    {}
-func (*CheckProposedHeaderAndUpdateStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{14}
-}
-func (m *CheckProposedHeaderAndUpdateStateRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CheckProposedHeaderAndUpdateStateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CheckProposedHeaderAndUpdateStateRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CheckProposedHeaderAndUpdateStateRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckProposedHeaderAndUpdateStateRequest.Merge(m, src)
-}
-func (m *CheckProposedHeaderAndUpdateStateRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *CheckProposedHeaderAndUpdateStateRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CheckProposedHeaderAndUpdateStateRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CheckProposedHeaderAndUpdateStateRequest proto.InternalMessageInfo
-
-func (m *CheckProposedHeaderAndUpdateStateRequest) GetState() *State {
-	if m != nil {
-		return m.State
-	}
-	return nil
-}
-
-func (m *CheckProposedHeaderAndUpdateStateRequest) GetHeader() *types.Header {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-type CheckProposedHeaderAndUpdateStateResponse struct {
-	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-}
-
-func (m *CheckProposedHeaderAndUpdateStateResponse) Reset() {
-	*m = CheckProposedHeaderAndUpdateStateResponse{}
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) String() string {
-	return proto.CompactTextString(m)
-}
-func (*CheckProposedHeaderAndUpdateStateResponse) ProtoMessage() {}
-func (*CheckProposedHeaderAndUpdateStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{15}
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CheckProposedHeaderAndUpdateStateResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckProposedHeaderAndUpdateStateResponse.Merge(m, src)
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CheckProposedHeaderAndUpdateStateResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CheckProposedHeaderAndUpdateStateResponse proto.InternalMessageInfo
-
-func (m *CheckProposedHeaderAndUpdateStateResponse) GetState() *State {
-	if m != nil {
-		return m.State
-	}
-	return nil
-}
-
-// rpc VerifyUpgrade
-type VerifyUpgradeRequest struct {
-	State         *State             `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-	NewClient     *types.ClientState `protobuf:"bytes,2,opt,name=new_client,json=newClient,proto3" json:"new_client,omitempty"`
-	UpgradeHeight *types1.Height     `protobuf:"bytes,3,opt,name=upgrade_height,json=upgradeHeight,proto3" json:"upgrade_height,omitempty"`
-	ProofUpgrade  []byte             `protobuf:"bytes,4,opt,name=proof_upgrade,json=proofUpgrade,proto3" json:"proof_upgrade,omitempty"`
-}
-
-func (m *VerifyUpgradeRequest) Reset()         { *m = VerifyUpgradeRequest{} }
-func (m *VerifyUpgradeRequest) String() string { return proto.CompactTextString(m) }
-func (*VerifyUpgradeRequest) ProtoMessage()    {}
-func (*VerifyUpgradeRequest) Descriptor() ([]byte, []int) {
+func (m *VerifyUpgradeAndUpdateStateRequest) Reset()         { *m = VerifyUpgradeAndUpdateStateRequest{} }
+func (m *VerifyUpgradeAndUpdateStateRequest) String() string { return proto.CompactTextString(m) }
+func (*VerifyUpgradeAndUpdateStateRequest) ProtoMessage()    {}
+func (*VerifyUpgradeAndUpdateStateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6967e85c342bf417, []int{16}
 }
-func (m *VerifyUpgradeRequest) XXX_Unmarshal(b []byte) error {
+func (m *VerifyUpgradeAndUpdateStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *VerifyUpgradeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *VerifyUpgradeAndUpdateStateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_VerifyUpgradeRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_VerifyUpgradeAndUpdateStateRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -815,42 +810,93 @@ func (m *VerifyUpgradeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return b[:n], nil
 	}
 }
-func (m *VerifyUpgradeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VerifyUpgradeRequest.Merge(m, src)
+func (m *VerifyUpgradeAndUpdateStateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VerifyUpgradeAndUpdateStateRequest.Merge(m, src)
 }
-func (m *VerifyUpgradeRequest) XXX_Size() int {
+func (m *VerifyUpgradeAndUpdateStateRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *VerifyUpgradeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_VerifyUpgradeRequest.DiscardUnknown(m)
+func (m *VerifyUpgradeAndUpdateStateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_VerifyUpgradeAndUpdateStateRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_VerifyUpgradeRequest proto.InternalMessageInfo
+var xxx_messageInfo_VerifyUpgradeAndUpdateStateRequest proto.InternalMessageInfo
 
-func (m *VerifyUpgradeRequest) GetState() *State {
+func (m *VerifyUpgradeAndUpdateStateRequest) GetState() *State {
 	if m != nil {
 		return m.State
 	}
 	return nil
 }
 
-func (m *VerifyUpgradeRequest) GetNewClient() *types.ClientState {
+func (m *VerifyUpgradeAndUpdateStateRequest) GetNewClient() *types.ClientState {
 	if m != nil {
 		return m.NewClient
 	}
 	return nil
 }
 
-func (m *VerifyUpgradeRequest) GetUpgradeHeight() *types1.Height {
+func (m *VerifyUpgradeAndUpdateStateRequest) GetNewConsState() *types.ConsensusState {
 	if m != nil {
-		return m.UpgradeHeight
+		return m.NewConsState
 	}
 	return nil
 }
 
-func (m *VerifyUpgradeRequest) GetProofUpgrade() []byte {
+func (m *VerifyUpgradeAndUpdateStateRequest) GetProofUpgradeClient() []byte {
 	if m != nil {
-		return m.ProofUpgrade
+		return m.ProofUpgradeClient
+	}
+	return nil
+}
+
+func (m *VerifyUpgradeAndUpdateStateRequest) GetProofUpgradeConsState() []byte {
+	if m != nil {
+		return m.ProofUpgradeConsState
+	}
+	return nil
+}
+
+type VerifyUpgradeAndUpdateStateResponse struct {
+	State *State `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+}
+
+func (m *VerifyUpgradeAndUpdateStateResponse) Reset()         { *m = VerifyUpgradeAndUpdateStateResponse{} }
+func (m *VerifyUpgradeAndUpdateStateResponse) String() string { return proto.CompactTextString(m) }
+func (*VerifyUpgradeAndUpdateStateResponse) ProtoMessage()    {}
+func (*VerifyUpgradeAndUpdateStateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6967e85c342bf417, []int{17}
+}
+func (m *VerifyUpgradeAndUpdateStateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *VerifyUpgradeAndUpdateStateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_VerifyUpgradeAndUpdateStateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *VerifyUpgradeAndUpdateStateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VerifyUpgradeAndUpdateStateResponse.Merge(m, src)
+}
+func (m *VerifyUpgradeAndUpdateStateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *VerifyUpgradeAndUpdateStateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_VerifyUpgradeAndUpdateStateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_VerifyUpgradeAndUpdateStateResponse proto.InternalMessageInfo
+
+func (m *VerifyUpgradeAndUpdateStateResponse) GetState() *State {
+	if m != nil {
+		return m.State
 	}
 	return nil
 }
@@ -864,7 +910,7 @@ func (m *ZeroCustomFieldsRequest) Reset()         { *m = ZeroCustomFieldsRequest
 func (m *ZeroCustomFieldsRequest) String() string { return proto.CompactTextString(m) }
 func (*ZeroCustomFieldsRequest) ProtoMessage()    {}
 func (*ZeroCustomFieldsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{17}
+	return fileDescriptor_6967e85c342bf417, []int{18}
 }
 func (m *ZeroCustomFieldsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -908,7 +954,7 @@ func (m *ZeroCustomFieldsResponse) Reset()         { *m = ZeroCustomFieldsRespon
 func (m *ZeroCustomFieldsResponse) String() string { return proto.CompactTextString(m) }
 func (*ZeroCustomFieldsResponse) ProtoMessage()    {}
 func (*ZeroCustomFieldsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{18}
+	return fileDescriptor_6967e85c342bf417, []int{19}
 }
 func (m *ZeroCustomFieldsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -958,7 +1004,7 @@ func (m *VerifyClientStateRequest) Reset()         { *m = VerifyClientStateReque
 func (m *VerifyClientStateRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyClientStateRequest) ProtoMessage()    {}
 func (*VerifyClientStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{19}
+	return fileDescriptor_6967e85c342bf417, []int{20}
 }
 func (m *VerifyClientStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1044,7 +1090,7 @@ func (m *VerifyClientConsensusStateRequest) Reset()         { *m = VerifyClientC
 func (m *VerifyClientConsensusStateRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyClientConsensusStateRequest) ProtoMessage()    {}
 func (*VerifyClientConsensusStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{20}
+	return fileDescriptor_6967e85c342bf417, []int{21}
 }
 func (m *VerifyClientConsensusStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1136,7 +1182,7 @@ func (m *VerifyConnectionStateRequest) Reset()         { *m = VerifyConnectionSt
 func (m *VerifyConnectionStateRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyConnectionStateRequest) ProtoMessage()    {}
 func (*VerifyConnectionStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{21}
+	return fileDescriptor_6967e85c342bf417, []int{22}
 }
 func (m *VerifyConnectionStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1222,7 +1268,7 @@ func (m *VerifyChannelStateRequest) Reset()         { *m = VerifyChannelStateReq
 func (m *VerifyChannelStateRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyChannelStateRequest) ProtoMessage()    {}
 func (*VerifyChannelStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{22}
+	return fileDescriptor_6967e85c342bf417, []int{23}
 }
 func (m *VerifyChannelStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1302,21 +1348,23 @@ func (m *VerifyChannelStateRequest) GetChannel() *types5.Channel {
 
 // rpc VerifyPacketCommitment
 type VerifyPacketCommitmentRequest struct {
-	State           *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-	Height          *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
-	Prefix          *types2.MerklePrefix `protobuf:"bytes,3,opt,name=prefix,proto3" json:"prefix,omitempty"`
-	Proof           []byte               `protobuf:"bytes,4,opt,name=proof,proto3" json:"proof,omitempty"`
-	PortId          string               `protobuf:"bytes,5,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
-	ChannelId       string               `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	Sequence        uint64               `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	CommitmentBytes []byte               `protobuf:"bytes,8,opt,name=commitment_bytes,json=commitmentBytes,proto3" json:"commitment_bytes,omitempty"`
+	State            *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	Height           *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
+	DelayTimePeriod  uint64               `protobuf:"varint,3,opt,name=delay_time_period,json=delayTimePeriod,proto3" json:"delay_time_period,omitempty"`
+	DelayBlockPeriod uint64               `protobuf:"varint,4,opt,name=delay_block_period,json=delayBlockPeriod,proto3" json:"delay_block_period,omitempty"`
+	Prefix           *types2.MerklePrefix `protobuf:"bytes,5,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	Proof            []byte               `protobuf:"bytes,6,opt,name=proof,proto3" json:"proof,omitempty"`
+	PortId           string               `protobuf:"bytes,7,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
+	ChannelId        string               `protobuf:"bytes,8,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	Sequence         uint64               `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	CommitmentBytes  []byte               `protobuf:"bytes,10,opt,name=commitment_bytes,json=commitmentBytes,proto3" json:"commitment_bytes,omitempty"`
 }
 
 func (m *VerifyPacketCommitmentRequest) Reset()         { *m = VerifyPacketCommitmentRequest{} }
 func (m *VerifyPacketCommitmentRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyPacketCommitmentRequest) ProtoMessage()    {}
 func (*VerifyPacketCommitmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{23}
+	return fileDescriptor_6967e85c342bf417, []int{24}
 }
 func (m *VerifyPacketCommitmentRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1357,6 +1405,20 @@ func (m *VerifyPacketCommitmentRequest) GetHeight() *types1.Height {
 		return m.Height
 	}
 	return nil
+}
+
+func (m *VerifyPacketCommitmentRequest) GetDelayTimePeriod() uint64 {
+	if m != nil {
+		return m.DelayTimePeriod
+	}
+	return 0
+}
+
+func (m *VerifyPacketCommitmentRequest) GetDelayBlockPeriod() uint64 {
+	if m != nil {
+		return m.DelayBlockPeriod
+	}
+	return 0
 }
 
 func (m *VerifyPacketCommitmentRequest) GetPrefix() *types2.MerklePrefix {
@@ -1403,21 +1465,23 @@ func (m *VerifyPacketCommitmentRequest) GetCommitmentBytes() []byte {
 
 // rpc VerifyPacketAcknowledgement
 type VerifyPacketAcknowledgementRequest struct {
-	State           *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-	Height          *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
-	Prefix          *types2.MerklePrefix `protobuf:"bytes,3,opt,name=prefix,proto3" json:"prefix,omitempty"`
-	Proof           []byte               `protobuf:"bytes,4,opt,name=proof,proto3" json:"proof,omitempty"`
-	PortId          string               `protobuf:"bytes,5,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
-	ChannelId       string               `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	Sequence        uint64               `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	Acknowledgement []byte               `protobuf:"bytes,8,opt,name=acknowledgement,proto3" json:"acknowledgement,omitempty"`
+	State            *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	Height           *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
+	DelayTimePeriod  uint64               `protobuf:"varint,3,opt,name=delay_time_period,json=delayTimePeriod,proto3" json:"delay_time_period,omitempty"`
+	DelayBlockPeriod uint64               `protobuf:"varint,4,opt,name=delay_block_period,json=delayBlockPeriod,proto3" json:"delay_block_period,omitempty"`
+	Prefix           *types2.MerklePrefix `protobuf:"bytes,5,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	Proof            []byte               `protobuf:"bytes,6,opt,name=proof,proto3" json:"proof,omitempty"`
+	PortId           string               `protobuf:"bytes,7,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
+	ChannelId        string               `protobuf:"bytes,8,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	Sequence         uint64               `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Acknowledgement  []byte               `protobuf:"bytes,10,opt,name=acknowledgement,proto3" json:"acknowledgement,omitempty"`
 }
 
 func (m *VerifyPacketAcknowledgementRequest) Reset()         { *m = VerifyPacketAcknowledgementRequest{} }
 func (m *VerifyPacketAcknowledgementRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyPacketAcknowledgementRequest) ProtoMessage()    {}
 func (*VerifyPacketAcknowledgementRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{24}
+	return fileDescriptor_6967e85c342bf417, []int{25}
 }
 func (m *VerifyPacketAcknowledgementRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1458,6 +1522,20 @@ func (m *VerifyPacketAcknowledgementRequest) GetHeight() *types1.Height {
 		return m.Height
 	}
 	return nil
+}
+
+func (m *VerifyPacketAcknowledgementRequest) GetDelayTimePeriod() uint64 {
+	if m != nil {
+		return m.DelayTimePeriod
+	}
+	return 0
+}
+
+func (m *VerifyPacketAcknowledgementRequest) GetDelayBlockPeriod() uint64 {
+	if m != nil {
+		return m.DelayBlockPeriod
+	}
+	return 0
 }
 
 func (m *VerifyPacketAcknowledgementRequest) GetPrefix() *types2.MerklePrefix {
@@ -1504,20 +1582,22 @@ func (m *VerifyPacketAcknowledgementRequest) GetAcknowledgement() []byte {
 
 // rpc VerifyPacketReceiptAbsence
 type VerifyPacketReceiptAbsenceRequest struct {
-	State     *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
-	Height    *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
-	Prefix    *types2.MerklePrefix `protobuf:"bytes,3,opt,name=prefix,proto3" json:"prefix,omitempty"`
-	Proof     []byte               `protobuf:"bytes,4,opt,name=proof,proto3" json:"proof,omitempty"`
-	PortId    string               `protobuf:"bytes,5,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
-	ChannelId string               `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	Sequence  uint64               `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	State            *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	Height           *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
+	DelayTimePeriod  uint64               `protobuf:"varint,3,opt,name=delay_time_period,json=delayTimePeriod,proto3" json:"delay_time_period,omitempty"`
+	DelayBlockPeriod uint64               `protobuf:"varint,4,opt,name=delay_block_period,json=delayBlockPeriod,proto3" json:"delay_block_period,omitempty"`
+	Prefix           *types2.MerklePrefix `protobuf:"bytes,5,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	Proof            []byte               `protobuf:"bytes,6,opt,name=proof,proto3" json:"proof,omitempty"`
+	PortId           string               `protobuf:"bytes,7,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
+	ChannelId        string               `protobuf:"bytes,8,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	Sequence         uint64               `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 }
 
 func (m *VerifyPacketReceiptAbsenceRequest) Reset()         { *m = VerifyPacketReceiptAbsenceRequest{} }
 func (m *VerifyPacketReceiptAbsenceRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyPacketReceiptAbsenceRequest) ProtoMessage()    {}
 func (*VerifyPacketReceiptAbsenceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{25}
+	return fileDescriptor_6967e85c342bf417, []int{26}
 }
 func (m *VerifyPacketReceiptAbsenceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1560,6 +1640,20 @@ func (m *VerifyPacketReceiptAbsenceRequest) GetHeight() *types1.Height {
 	return nil
 }
 
+func (m *VerifyPacketReceiptAbsenceRequest) GetDelayTimePeriod() uint64 {
+	if m != nil {
+		return m.DelayTimePeriod
+	}
+	return 0
+}
+
+func (m *VerifyPacketReceiptAbsenceRequest) GetDelayBlockPeriod() uint64 {
+	if m != nil {
+		return m.DelayBlockPeriod
+	}
+	return 0
+}
+
 func (m *VerifyPacketReceiptAbsenceRequest) GetPrefix() *types2.MerklePrefix {
 	if m != nil {
 		return m.Prefix
@@ -1599,18 +1693,20 @@ func (m *VerifyPacketReceiptAbsenceRequest) GetSequence() uint64 {
 type VerifyNextSequenceRecvRequest struct {
 	State            *State               `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
 	Height           *types1.Height       `protobuf:"bytes,2,opt,name=height,proto3" json:"height,omitempty"`
-	Prefix           *types2.MerklePrefix `protobuf:"bytes,3,opt,name=prefix,proto3" json:"prefix,omitempty"`
-	Proof            []byte               `protobuf:"bytes,4,opt,name=proof,proto3" json:"proof,omitempty"`
-	PortId           string               `protobuf:"bytes,5,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
-	ChannelId        string               `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	NextSequenceRecv uint64               `protobuf:"varint,7,opt,name=next_sequence_recv,json=nextSequenceRecv,proto3" json:"next_sequence_recv,omitempty"`
+	DelayTimePeriod  uint64               `protobuf:"varint,3,opt,name=delay_time_period,json=delayTimePeriod,proto3" json:"delay_time_period,omitempty"`
+	DelayBlockPeriod uint64               `protobuf:"varint,4,opt,name=delay_block_period,json=delayBlockPeriod,proto3" json:"delay_block_period,omitempty"`
+	Prefix           *types2.MerklePrefix `protobuf:"bytes,5,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	Proof            []byte               `protobuf:"bytes,6,opt,name=proof,proto3" json:"proof,omitempty"`
+	PortId           string               `protobuf:"bytes,7,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
+	ChannelId        string               `protobuf:"bytes,8,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	NextSequenceRecv uint64               `protobuf:"varint,9,opt,name=next_sequence_recv,json=nextSequenceRecv,proto3" json:"next_sequence_recv,omitempty"`
 }
 
 func (m *VerifyNextSequenceRecvRequest) Reset()         { *m = VerifyNextSequenceRecvRequest{} }
 func (m *VerifyNextSequenceRecvRequest) String() string { return proto.CompactTextString(m) }
 func (*VerifyNextSequenceRecvRequest) ProtoMessage()    {}
 func (*VerifyNextSequenceRecvRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6967e85c342bf417, []int{26}
+	return fileDescriptor_6967e85c342bf417, []int{27}
 }
 func (m *VerifyNextSequenceRecvRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1651,6 +1747,20 @@ func (m *VerifyNextSequenceRecvRequest) GetHeight() *types1.Height {
 		return m.Height
 	}
 	return nil
+}
+
+func (m *VerifyNextSequenceRecvRequest) GetDelayTimePeriod() uint64 {
+	if m != nil {
+		return m.DelayTimePeriod
+	}
+	return 0
+}
+
+func (m *VerifyNextSequenceRecvRequest) GetDelayBlockPeriod() uint64 {
+	if m != nil {
+		return m.DelayBlockPeriod
+	}
+	return 0
 }
 
 func (m *VerifyNextSequenceRecvRequest) GetPrefix() *types2.MerklePrefix {
@@ -1695,18 +1805,19 @@ func init() {
 	proto.RegisterType((*ClientTypeResponse)(nil), "ibc.lightclientd.fabric.v1.ClientTypeResponse")
 	proto.RegisterType((*GetLatestHeightRequest)(nil), "ibc.lightclientd.fabric.v1.GetLatestHeightRequest")
 	proto.RegisterType((*GetLatestHeightResponse)(nil), "ibc.lightclientd.fabric.v1.GetLatestHeightResponse")
-	proto.RegisterType((*IsFrozenRequest)(nil), "ibc.lightclientd.fabric.v1.IsFrozenRequest")
-	proto.RegisterType((*IsFrozenResponse)(nil), "ibc.lightclientd.fabric.v1.IsFrozenResponse")
-	proto.RegisterType((*GetFrozenHeightRequest)(nil), "ibc.lightclientd.fabric.v1.GetFrozenHeightRequest")
-	proto.RegisterType((*GetFrozenHeightResponse)(nil), "ibc.lightclientd.fabric.v1.GetFrozenHeightResponse")
 	proto.RegisterType((*ValidateRequest)(nil), "ibc.lightclientd.fabric.v1.ValidateRequest")
 	proto.RegisterType((*GetProofSpecsRequest)(nil), "ibc.lightclientd.fabric.v1.GetProofSpecsRequest")
 	proto.RegisterType((*GetProofSpecsResponse)(nil), "ibc.lightclientd.fabric.v1.GetProofSpecsResponse")
+	proto.RegisterType((*InitializeRequest)(nil), "ibc.lightclientd.fabric.v1.InitializeRequest")
+	proto.RegisterType((*InitializeResponse)(nil), "ibc.lightclientd.fabric.v1.InitializeResponse")
+	proto.RegisterType((*StatusRequest)(nil), "ibc.lightclientd.fabric.v1.StatusRequest")
+	proto.RegisterType((*StatusResponse)(nil), "ibc.lightclientd.fabric.v1.StatusResponse")
+	proto.RegisterType((*ExportMetadataRequest)(nil), "ibc.lightclientd.fabric.v1.ExportMetadataRequest")
+	proto.RegisterType((*ExportMetadataResponse)(nil), "ibc.lightclientd.fabric.v1.ExportMetadataResponse")
 	proto.RegisterType((*CheckHeaderAndUpdateStateRequest)(nil), "ibc.lightclientd.fabric.v1.CheckHeaderAndUpdateStateRequest")
 	proto.RegisterType((*CheckHeaderAndUpdateStateResponse)(nil), "ibc.lightclientd.fabric.v1.CheckHeaderAndUpdateStateResponse")
-	proto.RegisterType((*CheckProposedHeaderAndUpdateStateRequest)(nil), "ibc.lightclientd.fabric.v1.CheckProposedHeaderAndUpdateStateRequest")
-	proto.RegisterType((*CheckProposedHeaderAndUpdateStateResponse)(nil), "ibc.lightclientd.fabric.v1.CheckProposedHeaderAndUpdateStateResponse")
-	proto.RegisterType((*VerifyUpgradeRequest)(nil), "ibc.lightclientd.fabric.v1.VerifyUpgradeRequest")
+	proto.RegisterType((*VerifyUpgradeAndUpdateStateRequest)(nil), "ibc.lightclientd.fabric.v1.VerifyUpgradeAndUpdateStateRequest")
+	proto.RegisterType((*VerifyUpgradeAndUpdateStateResponse)(nil), "ibc.lightclientd.fabric.v1.VerifyUpgradeAndUpdateStateResponse")
 	proto.RegisterType((*ZeroCustomFieldsRequest)(nil), "ibc.lightclientd.fabric.v1.ZeroCustomFieldsRequest")
 	proto.RegisterType((*ZeroCustomFieldsResponse)(nil), "ibc.lightclientd.fabric.v1.ZeroCustomFieldsResponse")
 	proto.RegisterType((*VerifyClientStateRequest)(nil), "ibc.lightclientd.fabric.v1.VerifyClientStateRequest")
@@ -1724,102 +1835,111 @@ func init() {
 }
 
 var fileDescriptor_6967e85c342bf417 = []byte{
-	// 1508 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x59, 0xdd, 0x6e, 0x13, 0x47,
-	0x14, 0x66, 0x9d, 0xc4, 0x24, 0x27, 0x7f, 0x66, 0x1a, 0xc0, 0x2c, 0x60, 0x92, 0xa5, 0x15, 0xa1,
-	0x85, 0x75, 0x13, 0x7e, 0x8b, 0xa0, 0x6a, 0x08, 0x01, 0x82, 0x42, 0x49, 0x97, 0x82, 0x54, 0x54,
-	0xc9, 0x5a, 0xef, 0x8e, 0x93, 0x91, 0x9d, 0xd9, 0xed, 0xee, 0xd8, 0x60, 0xa4, 0xbe, 0x43, 0xef,
-	0xda, 0xbb, 0xbe, 0x02, 0x57, 0xa8, 0x4f, 0x50, 0xf5, 0xa2, 0x17, 0xa8, 0x57, 0x55, 0x6f, 0x5a,
-	0x91, 0x07, 0x69, 0xb5, 0x33, 0x63, 0x7b, 0xbd, 0xf6, 0xee, 0x3a, 0x71, 0xa5, 0xfe, 0xc0, 0xdd,
-	0xce, 0x99, 0xf3, 0xfb, 0x9d, 0x99, 0xf1, 0x39, 0xc7, 0x70, 0x86, 0x94, 0xad, 0x62, 0x8d, 0x6c,
-	0x6d, 0x33, 0xab, 0x46, 0x30, 0x65, 0x76, 0xb1, 0x62, 0x96, 0x3d, 0x62, 0x15, 0x1b, 0x4b, 0xf2,
-	0x4b, 0x77, 0x3d, 0x87, 0x39, 0x48, 0x25, 0x65, 0x4b, 0x0f, 0x33, 0xea, 0x72, 0xbb, 0xb1, 0xa4,
-	0x9e, 0x0a, 0x94, 0x58, 0x8e, 0x87, 0x8b, 0x62, 0x2f, 0x10, 0x16, 0x5f, 0x42, 0x58, 0x3d, 0xd3,
-	0x61, 0x70, 0x28, 0xc5, 0x16, 0x23, 0x0e, 0xe5, 0x4c, 0xed, 0x95, 0x64, 0x5c, 0xe8, 0x30, 0x6e,
-	0x9b, 0x94, 0xe2, 0x1a, 0xe7, 0x12, 0x9f, 0x7d, 0x74, 0xed, 0xec, 0x10, 0xb6, 0xd3, 0x32, 0xd8,
-	0x5e, 0x85, 0x19, 0x43, 0x1e, 0xfb, 0x31, 0xa1, 0xa9, 0xef, 0x58, 0x0e, 0xad, 0x10, 0xa7, 0xe8,
-	0x7a, 0x8e, 0x53, 0xf1, 0x25, 0xf1, 0xf8, 0x96, 0xe3, 0x6c, 0xd5, 0x70, 0x91, 0xaf, 0xca, 0xf5,
-	0x4a, 0x11, 0xef, 0xb8, 0xac, 0x29, 0x37, 0x8f, 0x45, 0x37, 0x4d, 0x2a, 0xb7, 0xb4, 0x97, 0x19,
-	0x18, 0x7b, 0xc8, 0x4c, 0x86, 0xd1, 0x0c, 0x64, 0x88, 0x9d, 0x57, 0xe6, 0x95, 0xc5, 0x09, 0x23,
-	0x43, 0x6c, 0x74, 0x0f, 0xa6, 0x84, 0x23, 0x25, 0x3f, 0xd8, 0xcf, 0x67, 0xe6, 0x95, 0xc5, 0xc9,
-	0xe5, 0x33, 0x7a, 0x04, 0x58, 0xbf, 0x03, 0xac, 0xbe, 0xca, 0x29, 0x5c, 0x9d, 0x31, 0x69, 0x75,
-	0x16, 0xc8, 0x84, 0x9c, 0xe5, 0x50, 0x1f, 0x53, 0xbf, 0xee, 0x0b, 0x75, 0x7e, 0x7e, 0x64, 0x7e,
-	0x64, 0x71, 0x72, 0xf9, 0xb2, 0x1e, 0x9f, 0x28, 0x9d, 0x0b, 0xeb, 0xab, 0x2d, 0x49, 0xbe, 0xf4,
-	0xd7, 0x28, 0xf3, 0x9a, 0xc6, 0xac, 0xd5, 0x4d, 0x55, 0x29, 0xcc, 0xf5, 0x63, 0x44, 0x39, 0x18,
-	0xa9, 0xe2, 0x26, 0x8f, 0x6b, 0xd4, 0x08, 0x3e, 0xd1, 0x27, 0x30, 0xd6, 0x30, 0x6b, 0xf5, 0x56,
-	0x44, 0xef, 0x27, 0x46, 0xd4, 0xa5, 0xd2, 0x10, 0x82, 0xd7, 0x32, 0x57, 0x15, 0x6d, 0x03, 0x0e,
-	0x89, 0x70, 0x3f, 0x6f, 0xba, 0xd8, 0xc0, 0x5f, 0xd5, 0xb1, 0xcf, 0xd0, 0x15, 0x18, 0x13, 0x60,
-	0x29, 0x5c, 0xf5, 0x42, 0x6a, 0x70, 0x86, 0xe0, 0xd7, 0x2e, 0x01, 0x0a, 0x6b, 0xf3, 0xdd, 0xc0,
-	0x2e, 0x3a, 0x05, 0x12, 0xc5, 0x12, 0x6b, 0xba, 0x58, 0xe6, 0x06, 0xac, 0x36, 0xa3, 0xf6, 0x19,
-	0x1c, 0xb9, 0x83, 0xd9, 0x46, 0x10, 0x2d, 0xbb, 0x8b, 0x03, 0x3b, 0x43, 0x7b, 0x72, 0x1f, 0x8e,
-	0xf6, 0xa8, 0x94, 0xee, 0x2c, 0x43, 0x76, 0x9b, 0x53, 0xa4, 0x52, 0x95, 0x2b, 0x0d, 0xce, 0xb6,
-	0x2e, 0xaf, 0x4f, 0x63, 0x49, 0x97, 0x32, 0x92, 0x53, 0xbb, 0x07, 0xb3, 0xeb, 0xfe, 0x6d, 0xcf,
-	0x79, 0x8e, 0xe9, 0xd0, 0xae, 0x15, 0x21, 0xd7, 0xd1, 0x25, 0x7d, 0x3a, 0x0e, 0x13, 0xc4, 0x2f,
-	0x55, 0x38, 0x91, 0x2b, 0x1c, 0x37, 0xc6, 0x89, 0x64, 0x92, 0xf0, 0x88, 0xc5, 0xdf, 0x0a, 0x4f,
-	0xb7, 0xca, 0xe1, 0xe0, 0x79, 0x6c, 0xd6, 0x88, 0x1d, 0x58, 0x18, 0xd6, 0xb5, 0x07, 0x30, 0x77,
-	0x07, 0xb3, 0xcd, 0xe0, 0x55, 0x78, 0xe8, 0x62, 0xcb, 0x1f, 0x5a, 0xe1, 0x3d, 0x38, 0x1c, 0x51,
-	0x28, 0x23, 0x5d, 0x82, 0x49, 0xfe, 0xf8, 0x94, 0xfc, 0x80, 0x9c, 0x57, 0xf8, 0x4d, 0xce, 0xe9,
-	0xc4, 0xf2, 0x97, 0x2f, 0xe8, 0x6d, 0x7e, 0x03, 0xdc, 0xb6, 0xa8, 0xf6, 0xad, 0x02, 0xf3, 0xab,
-	0xdb, 0xd8, 0xaa, 0xde, 0xc5, 0xa6, 0x8d, 0xbd, 0x15, 0x6a, 0x3f, 0x72, 0x83, 0xa8, 0x85, 0xc1,
-	0x21, 0x3d, 0x45, 0xd7, 0x02, 0xe8, 0x03, 0xbd, 0xf2, 0x4e, 0x6b, 0x49, 0x77, 0x5a, 0x78, 0x60,
-	0x48, 0x09, 0xed, 0x4b, 0x58, 0x48, 0x70, 0x4c, 0x46, 0xbc, 0x6f, 0x0c, 0xbf, 0x57, 0x60, 0x91,
-	0xab, 0xdf, 0xf4, 0x1c, 0xd7, 0xf1, 0xb1, 0xfd, 0xaf, 0x8b, 0xdf, 0x86, 0xb3, 0x03, 0x38, 0x38,
-	0x2c, 0x0e, 0x7f, 0x2a, 0x30, 0xf7, 0x18, 0x7b, 0xa4, 0xd2, 0x7c, 0xe4, 0x6e, 0x79, 0xa6, 0x3d,
-	0x7c, 0xcc, 0xb7, 0x01, 0x28, 0x7e, 0x5a, 0x12, 0x5c, 0x7b, 0xfd, 0x75, 0x9a, 0xa0, 0xf8, 0xa9,
-	0x58, 0xa3, 0x15, 0x98, 0xa9, 0x0b, 0x97, 0x4a, 0xf2, 0xfa, 0x8e, 0xa4, 0x5e, 0xdf, 0x69, 0x29,
-	0x21, 0x96, 0xe8, 0x34, 0x4c, 0x8b, 0xfb, 0x20, 0xc9, 0xf9, 0xd1, 0x79, 0x65, 0x71, 0xca, 0x98,
-	0xe2, 0x44, 0x19, 0xaf, 0x66, 0xc0, 0xd1, 0x27, 0xd8, 0x73, 0x56, 0xeb, 0x3e, 0x73, 0x76, 0x6e,
-	0x13, 0x5c, 0xb3, 0x87, 0xbf, 0xa1, 0x15, 0xc8, 0xf7, 0xea, 0x94, 0xa9, 0x8a, 0xfe, 0x7e, 0x2b,
-	0xfb, 0xff, 0xfd, 0xd6, 0x7e, 0xcb, 0x40, 0x5e, 0x64, 0x2f, 0xcc, 0x32, 0x6c, 0x06, 0x3b, 0x0f,
-	0x66, 0x66, 0xd0, 0x07, 0x13, 0x5d, 0x87, 0xac, 0xeb, 0xe1, 0x0a, 0x79, 0x26, 0xb3, 0xf4, 0x6e,
-	0x48, 0xa6, 0x53, 0x51, 0x35, 0x96, 0xf4, 0xfb, 0xd8, 0xab, 0xd6, 0xf0, 0x26, 0xe7, 0x35, 0xa4,
-	0x0c, 0xba, 0x05, 0x05, 0xcb, 0xa9, 0x53, 0x86, 0x3d, 0xd7, 0xf4, 0x58, 0x53, 0x1e, 0x9e, 0x12,
-	0xb1, 0x31, 0x65, 0xa4, 0x42, 0xb0, 0xc7, 0x33, 0x37, 0x61, 0x9c, 0x08, 0x73, 0x89, 0x90, 0xd7,
-	0xdb, 0x3c, 0x68, 0x0e, 0xc6, 0x78, 0x66, 0xf3, 0x63, 0x3c, 0xcd, 0x62, 0x81, 0xae, 0x44, 0xf0,
-	0xce, 0x72, 0xff, 0xe6, 0x74, 0x51, 0x7b, 0xe9, 0xad, 0xda, 0x4b, 0x5f, 0xa1, 0xcd, 0x6e, 0x70,
-	0x5f, 0x8c, 0xc0, 0x42, 0x18, 0xdc, 0x48, 0xcd, 0xf1, 0x4f, 0xa0, 0x9c, 0x8e, 0xd3, 0xc8, 0x00,
-	0x38, 0xad, 0x85, 0xab, 0x3e, 0xe9, 0xc3, 0x68, 0xaa, 0x0f, 0x9d, 0xca, 0xee, 0x6e, 0x34, 0xe5,
-	0x63, 0xfb, 0x48, 0x79, 0x3b, 0x59, 0xd9, 0x70, 0xb2, 0x6e, 0xc0, 0x6c, 0xa4, 0x20, 0xcd, 0x1f,
-	0x4c, 0xc8, 0xd7, 0x4c, 0x77, 0xb5, 0xa9, 0xfd, 0x92, 0x81, 0x13, 0x32, 0x65, 0xed, 0x96, 0xe0,
-	0xbf, 0x7a, 0x27, 0xda, 0x00, 0x8d, 0x86, 0x01, 0x3a, 0x0d, 0xd3, 0x9d, 0x6e, 0xa7, 0x44, 0x6c,
-	0x8e, 0xfd, 0x84, 0x31, 0xd5, 0x21, 0xae, 0xdb, 0x68, 0x03, 0x66, 0x42, 0x4c, 0x98, 0xda, 0xf2,
-	0xd0, 0xbf, 0x17, 0x76, 0xa0, 0xdd, 0x32, 0x89, 0x72, 0x5a, 0xae, 0xd6, 0xa8, 0x6d, 0x84, 0x2c,
-	0xac, 0x51, 0x5b, 0xfb, 0x39, 0x03, 0xc7, 0x24, 0xa8, 0xa2, 0x83, 0xfa, 0x7f, 0x21, 0x7a, 0x14,
-	0x0e, 0xba, 0x8e, 0xc7, 0x3a, 0x58, 0x66, 0x83, 0xe5, 0xba, 0x8d, 0x4e, 0x02, 0xc8, 0x96, 0x31,
-	0xd8, 0xcb, 0xf2, 0xbd, 0x09, 0x49, 0x59, 0xb7, 0xd1, 0x65, 0x38, 0x28, 0x17, 0xf2, 0x88, 0x9e,
-	0x08, 0x39, 0x23, 0x5b, 0xcd, 0x00, 0x5a, 0xf1, 0x69, 0xb4, 0x98, 0xb5, 0xdf, 0x33, 0x70, 0x52,
-	0xc0, 0xb9, 0x69, 0x5a, 0x55, 0xcc, 0x56, 0xdb, 0x8e, 0xbf, 0xf1, 0x90, 0xaa, 0x30, 0xee, 0x07,
-	0x18, 0x50, 0x4b, 0x5c, 0xfb, 0x51, 0xa3, 0xbd, 0x46, 0x67, 0x83, 0x47, 0xab, 0xe5, 0x4f, 0xa9,
-	0xdc, 0x0c, 0x5a, 0xd5, 0x71, 0x6e, 0x74, 0xb6, 0x43, 0xbf, 0x19, 0x90, 0xb5, 0xdd, 0x0c, 0x68,
-	0x61, 0x84, 0x57, 0xac, 0x2a, 0x75, 0x9e, 0xd6, 0xb0, 0xbd, 0x85, 0xdf, 0xc2, 0x9c, 0x02, 0xf3,
-	0x22, 0xcc, 0x9a, 0xdd, 0x70, 0xb5, 0x50, 0x8e, 0x90, 0xb5, 0x1f, 0x32, 0xad, 0x9f, 0x47, 0x81,
-	0xb2, 0x81, 0x2d, 0x4c, 0x5c, 0xb6, 0x52, 0xf6, 0x03, 0x45, 0x6f, 0x41, 0x8e, 0x07, 0x59, 0xfb,
-	0xb1, 0xfd, 0x04, 0x7c, 0x8a, 0x9f, 0xb1, 0x87, 0x92, 0x6c, 0x60, 0xab, 0xf1, 0xc6, 0xc3, 0x76,
-	0x0e, 0x10, 0xc5, 0xcf, 0x58, 0xa9, 0x85, 0x55, 0xc9, 0xc3, 0x56, 0x43, 0x02, 0x98, 0xa3, 0x11,
-	0xb4, 0x96, 0x5f, 0xe6, 0x60, 0x72, 0x23, 0x88, 0x41, 0xf6, 0x0c, 0x55, 0x80, 0xce, 0xb8, 0x06,
-	0x9d, 0x4f, 0x42, 0xad, 0x67, 0x48, 0xa4, 0xea, 0x83, 0xb2, 0xcb, 0x42, 0xfe, 0x39, 0xcc, 0x46,
-	0x26, 0x32, 0x68, 0x39, 0x49, 0x45, 0xff, 0x89, 0x90, 0x7a, 0x61, 0x4f, 0x32, 0xd2, 0x36, 0x86,
-	0xf1, 0xd6, 0xc8, 0x05, 0x7d, 0x90, 0xa4, 0x20, 0x32, 0xe4, 0x51, 0xcf, 0x0d, 0xc6, 0xdc, 0x15,
-	0x62, 0x78, 0xaa, 0x92, 0x1a, 0x62, 0x9f, 0xa9, 0x4e, 0x6a, 0x88, 0x7d, 0xc7, 0x36, 0x0f, 0x60,
-	0xbc, 0x35, 0x82, 0x49, 0x0e, 0x31, 0x32, 0xa8, 0x51, 0x8f, 0xf4, 0x94, 0x8a, 0x6b, 0x3b, 0x2e,
-	0x6b, 0x22, 0x06, 0xd3, 0x5d, 0x63, 0x13, 0xf4, 0x61, 0x8a, 0x5b, 0x3d, 0x23, 0x1b, 0x75, 0x69,
-	0x0f, 0x12, 0x32, 0x8c, 0xef, 0x14, 0x38, 0x16, 0x3b, 0xc7, 0x40, 0xd7, 0x13, 0xcf, 0x5c, 0xca,
-	0x5c, 0x46, 0xbd, 0xb1, 0x4f, 0x69, 0xe9, 0xda, 0x0b, 0x45, 0x8e, 0x58, 0x92, 0x46, 0x0c, 0xe8,
-	0x56, 0xaa, 0x91, 0x01, 0x46, 0x28, 0xea, 0xda, 0x90, 0x5a, 0xa4, 0xcb, 0x5f, 0xc0, 0x74, 0xd7,
-	0xb4, 0x22, 0x39, 0x87, 0xfd, 0x06, 0x1b, 0xb1, 0xc7, 0xe3, 0x6b, 0xc8, 0x45, 0x7b, 0x76, 0x94,
-	0x78, 0x70, 0x63, 0xa6, 0x06, 0xea, 0xc5, 0xbd, 0x09, 0xc9, 0xc8, 0x4c, 0x38, 0xd4, 0xd3, 0xc9,
-	0xa3, 0x8b, 0xe9, 0xd1, 0xf5, 0x36, 0xfe, 0xb1, 0x11, 0xfa, 0xa0, 0xc6, 0xf7, 0xb3, 0xe8, 0xc6,
-	0xa0, 0xb6, 0xfa, 0xf6, 0xc1, 0xb1, 0x46, 0x09, 0x1c, 0xee, 0xdb, 0x91, 0xa1, 0xab, 0x03, 0xd8,
-	0xeb, 0xdb, 0xc4, 0xc5, 0x9a, 0xb2, 0x00, 0xf5, 0xf6, 0x29, 0xe8, 0xd2, 0x00, 0x76, 0x7a, 0xfb,
-	0x9a, 0x58, 0x23, 0x55, 0x38, 0xd2, 0xbf, 0x7a, 0x47, 0x1f, 0xa5, 0x1b, 0x8a, 0xa9, 0xf8, 0x63,
-	0x8d, 0xd5, 0xe1, 0x78, 0x42, 0x21, 0x8b, 0x3e, 0x1e, 0xd4, 0x62, 0xff, 0x0a, 0x38, 0xfd, 0xa0,
-	0xf4, 0xab, 0xec, 0x06, 0x39, 0x28, 0x09, 0x15, 0x61, 0x3a, 0xb0, 0xd1, 0x9a, 0x68, 0x10, 0x60,
-	0x63, 0xea, 0xa8, 0x38, 0x63, 0x37, 0x1f, 0xfc, 0xf4, 0xba, 0xa0, 0xbc, 0x7a, 0x5d, 0x50, 0xfe,
-	0x78, 0x5d, 0x50, 0xbe, 0xd9, 0x2d, 0x1c, 0x78, 0xb5, 0x5b, 0x38, 0xf0, 0xeb, 0x6e, 0xe1, 0xc0,
-	0x93, 0x4b, 0x5b, 0x84, 0x6d, 0xd7, 0xcb, 0x41, 0xe5, 0x53, 0xb4, 0x4d, 0x66, 0x5a, 0xdb, 0x26,
-	0xa1, 0x35, 0xb3, 0x2c, 0xff, 0xeb, 0x3b, 0x4f, 0xca, 0xd6, 0xf9, 0xae, 0x3f, 0x3a, 0x59, 0xd3,
-	0xc5, 0x7e, 0x39, 0xcb, 0x0d, 0x5c, 0xf8, 0x2b, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x59, 0x9d, 0x23,
-	0x09, 0x1d, 0x00, 0x00,
+	// 1655 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x19, 0x5d, 0x6f, 0xdb, 0x54,
+	0x74, 0x49, 0xda, 0x74, 0x3d, 0xed, 0xda, 0xf4, 0xd2, 0x76, 0x99, 0xb7, 0x75, 0xad, 0x07, 0x5a,
+	0x37, 0x36, 0x67, 0xed, 0x3e, 0x99, 0x36, 0xa0, 0x2b, 0xdd, 0xda, 0xa9, 0x65, 0xc5, 0xdd, 0xf6,
+	0x30, 0x21, 0x22, 0xc7, 0xbe, 0x49, 0x2f, 0x49, 0x6c, 0x63, 0xdf, 0xb4, 0xcd, 0x24, 0xfe, 0x03,
+	0xe2, 0x05, 0x9e, 0x10, 0xfc, 0x00, 0x24, 0x9e, 0x90, 0x78, 0xe0, 0x9d, 0x07, 0x1e, 0x26, 0x9e,
+	0x10, 0x4f, 0xa8, 0xfb, 0x23, 0xc8, 0xf7, 0x5e, 0x3b, 0x8e, 0x93, 0x38, 0x69, 0xc3, 0x54, 0x81,
+	0xf6, 0xe6, 0x73, 0xef, 0xf9, 0xfe, 0xb0, 0xcf, 0x39, 0x86, 0x0b, 0xa4, 0xa0, 0xe7, 0x2a, 0xa4,
+	0xb4, 0x4d, 0xf5, 0x0a, 0xc1, 0x26, 0x35, 0x72, 0x45, 0xad, 0xe0, 0x10, 0x3d, 0xb7, 0xb3, 0x20,
+	0x9e, 0x14, 0xdb, 0xb1, 0xa8, 0x85, 0x24, 0x52, 0xd0, 0x95, 0x30, 0xa2, 0x22, 0xae, 0x77, 0x16,
+	0xa4, 0x73, 0x1e, 0x13, 0xdd, 0x72, 0x70, 0x8e, 0xdf, 0x79, 0xc4, 0xfc, 0x89, 0x13, 0x4b, 0xb3,
+	0x6d, 0x10, 0x4a, 0xd8, 0xc4, 0x2e, 0x71, 0x05, 0xc6, 0x85, 0x06, 0x86, 0x65, 0x9a, 0x58, 0xa7,
+	0xc4, 0x32, 0x19, 0x9b, 0x00, 0x12, 0x88, 0x73, 0x0d, 0xc4, 0x6d, 0xcd, 0x34, 0x71, 0x85, 0x61,
+	0xf1, 0xc7, 0x36, 0xbc, 0xaa, 0x55, 0x42, 0xab, 0xbe, 0x4a, 0x01, 0x14, 0x46, 0x0c, 0xd9, 0xe4,
+	0x76, 0x30, 0x5e, 0x7a, 0x4b, 0xb7, 0xcc, 0x22, 0xb1, 0x72, 0xb6, 0x63, 0x59, 0x45, 0x5f, 0xe5,
+	0xd3, 0x25, 0xcb, 0x2a, 0x55, 0x70, 0x8e, 0x41, 0x85, 0x5a, 0x31, 0x87, 0xab, 0x36, 0xad, 0x8b,
+	0xcb, 0x53, 0xd1, 0x4b, 0xcd, 0x14, 0x57, 0xf2, 0xcf, 0x49, 0x18, 0xdc, 0xa2, 0x1a, 0xc5, 0x68,
+	0x0c, 0x92, 0xc4, 0xc8, 0x26, 0x66, 0x13, 0xf3, 0xc3, 0x6a, 0x92, 0x18, 0xe8, 0x11, 0x8c, 0x72,
+	0x45, 0xf2, 0xae, 0x77, 0x9f, 0x4d, 0xce, 0x26, 0xe6, 0x47, 0x16, 0x2f, 0x28, 0x11, 0xd7, 0xbb,
+	0x0d, 0xd7, 0x2b, 0xcb, 0xec, 0x84, 0xb1, 0x53, 0x47, 0xf4, 0x06, 0x80, 0x34, 0xc8, 0xe8, 0x96,
+	0xe9, 0x62, 0xd3, 0xad, 0xb9, 0x9c, 0x9d, 0x9b, 0x4d, 0xcd, 0xa6, 0xe6, 0x47, 0x16, 0x6f, 0x2a,
+	0x9d, 0x43, 0xa9, 0x30, 0x62, 0x65, 0xd9, 0xa7, 0x64, 0xa0, 0xbb, 0x62, 0x52, 0xa7, 0xae, 0x8e,
+	0xeb, 0xcd, 0xa7, 0x92, 0x09, 0x93, 0xed, 0x10, 0x51, 0x06, 0x52, 0x65, 0x5c, 0x67, 0x76, 0x0d,
+	0xa8, 0xde, 0x23, 0xfa, 0x10, 0x06, 0x77, 0xb4, 0x4a, 0xcd, 0xb7, 0xe8, 0x52, 0xac, 0x45, 0x4d,
+	0x2c, 0x55, 0x4e, 0x78, 0x27, 0x79, 0x3b, 0x21, 0xaf, 0xc3, 0x04, 0x37, 0xf7, 0x49, 0xdd, 0xc6,
+	0x2a, 0xfe, 0xa2, 0x86, 0x5d, 0x8a, 0x6e, 0xc1, 0x20, 0x77, 0x56, 0x82, 0xb1, 0x9e, 0xeb, 0x6a,
+	0x9c, 0xca, 0xf1, 0xe5, 0x1b, 0x80, 0xc2, 0xdc, 0x5c, 0xdb, 0x93, 0x8b, 0xce, 0x81, 0xf0, 0x62,
+	0x9e, 0xd6, 0x6d, 0x2c, 0x62, 0x03, 0x7a, 0x80, 0x28, 0x7f, 0x02, 0xd3, 0x0f, 0x31, 0x5d, 0xf7,
+	0xac, 0xa5, 0xab, 0xd8, 0x93, 0xd3, 0xb7, 0x26, 0x1b, 0x70, 0xb2, 0x85, 0xa5, 0x50, 0x67, 0x11,
+	0xd2, 0xdb, 0xec, 0x44, 0x30, 0x95, 0x18, 0x53, 0x2f, 0xb7, 0x15, 0x51, 0x60, 0x3b, 0x0b, 0x8a,
+	0xa0, 0x11, 0x98, 0xf2, 0x23, 0x18, 0x7f, 0xa6, 0x55, 0x88, 0xe1, 0x49, 0xe8, 0x57, 0xb5, 0xc7,
+	0x30, 0xf9, 0x10, 0xd3, 0x4d, 0x2f, 0xed, 0xb7, 0x6c, 0xac, 0xbb, 0x7d, 0x33, 0x7c, 0x04, 0x53,
+	0x11, 0x86, 0xc2, 0xd2, 0x05, 0x18, 0x61, 0xd5, 0x95, 0x77, 0xbd, 0xe3, 0x6c, 0x82, 0xa5, 0x6a,
+	0x46, 0x21, 0xba, 0xbb, 0x78, 0x4d, 0x09, 0xf0, 0x55, 0xb0, 0x03, 0x52, 0xf9, 0x87, 0x04, 0x4c,
+	0xac, 0x99, 0x84, 0x12, 0xad, 0x42, 0x5e, 0xf4, 0x6d, 0x2b, 0xda, 0x82, 0xf1, 0x48, 0xc5, 0x1c,
+	0x22, 0x5d, 0xc7, 0x9a, 0x8b, 0x44, 0xde, 0x00, 0x14, 0x56, 0x51, 0x18, 0x7b, 0x68, 0xf7, 0xad,
+	0xc2, 0x09, 0x0f, 0xae, 0xf5, 0x1f, 0x88, 0x79, 0x18, 0xf3, 0x39, 0x09, 0xa5, 0xa6, 0x21, 0xed,
+	0xb2, 0x13, 0x91, 0xf5, 0x02, 0x92, 0x37, 0x61, 0x6a, 0x65, 0xcf, 0xb6, 0x1c, 0xba, 0x81, 0xa9,
+	0x66, 0x68, 0x54, 0xeb, 0x5b, 0xf6, 0xe7, 0x30, 0x1d, 0xe5, 0x28, 0x74, 0xd8, 0x84, 0x09, 0xf1,
+	0x5d, 0xc8, 0x57, 0xc5, 0x9d, 0x9f, 0x0b, 0xe7, 0xdb, 0xa5, 0xfe, 0x43, 0x8e, 0x1c, 0xf0, 0xc9,
+	0x94, 0x9a, 0x0f, 0x5c, 0xf9, 0x9b, 0x04, 0xcc, 0x2e, 0x6f, 0x63, 0xbd, 0xbc, 0x8a, 0x35, 0x03,
+	0x3b, 0x4b, 0xa6, 0xf1, 0xd4, 0xf6, 0x4a, 0x83, 0x2b, 0xd4, 0x6f, 0xce, 0xdc, 0xf1, 0xea, 0xd3,
+	0xe3, 0x2b, 0x52, 0x45, 0x8e, 0x4b, 0x15, 0xae, 0x81, 0x2a, 0x28, 0xe4, 0x4f, 0x61, 0x2e, 0x46,
+	0xb1, 0x7e, 0x33, 0x65, 0x3f, 0x09, 0xf2, 0x33, 0xec, 0x90, 0x62, 0xfd, 0xa9, 0x5d, 0x72, 0x34,
+	0x03, 0xff, 0xcb, 0x96, 0x3f, 0x00, 0x30, 0xf1, 0x6e, 0x9e, 0x63, 0x1d, 0xf4, 0x4b, 0x35, 0x6c,
+	0xe2, 0x5d, 0x0e, 0xa3, 0x4d, 0x18, 0x63, 0x7c, 0x2c, 0xd3, 0x2f, 0xba, 0xd4, 0x81, 0x8b, 0x6e,
+	0xd4, 0x63, 0x67, 0x99, 0x1c, 0x42, 0x57, 0x61, 0x92, 0xbf, 0x49, 0x6a, 0xdc, 0x70, 0x5f, 0xc7,
+	0x81, 0xd9, 0xc4, 0xfc, 0xa8, 0x8a, 0xd8, 0x9d, 0xf0, 0x89, 0xd0, 0xe1, 0x16, 0x64, 0x23, 0x14,
+	0x0d, 0x6d, 0x06, 0x19, 0xd5, 0x54, 0x13, 0x95, 0x2f, 0x4a, 0xfe, 0x0c, 0xce, 0xc7, 0xfa, 0xb8,
+	0xdf, 0x20, 0xaa, 0x70, 0xf2, 0x39, 0x76, 0xac, 0xe5, 0x9a, 0x4b, 0xad, 0xea, 0x03, 0x82, 0x2b,
+	0x46, 0xff, 0x85, 0x5f, 0x84, 0x6c, 0x2b, 0x4f, 0xa1, 0x68, 0xb4, 0x01, 0x49, 0x1c, 0xbe, 0x01,
+	0x91, 0xff, 0x4a, 0x42, 0x96, 0x3b, 0x27, 0x8c, 0xd2, 0x6f, 0xda, 0x35, 0x3e, 0x88, 0xc9, 0x5e,
+	0x3f, 0x88, 0xe8, 0x2e, 0xa4, 0x6d, 0x07, 0x17, 0xc9, 0x9e, 0x48, 0xad, 0xb7, 0x43, 0x34, 0x8d,
+	0x96, 0x70, 0x67, 0x41, 0xd9, 0xc0, 0x4e, 0xb9, 0x82, 0x37, 0x19, 0xae, 0x2a, 0x68, 0xd0, 0x47,
+	0x30, 0xa3, 0x5b, 0x35, 0x93, 0x62, 0xc7, 0xd6, 0x1c, 0x5a, 0x17, 0xd9, 0x94, 0x27, 0x06, 0x36,
+	0x29, 0x29, 0x12, 0xec, 0xb0, 0xc4, 0x1a, 0x56, 0xcf, 0x84, 0xb1, 0xb8, 0xc9, 0x6b, 0x01, 0x0e,
+	0x9a, 0x84, 0x41, 0x96, 0x42, 0x22, 0x9f, 0x38, 0x80, 0x6e, 0x45, 0xfc, 0x9d, 0x66, 0xfa, 0x4d,
+	0x2a, 0xbc, 0x79, 0x54, 0xfc, 0xe6, 0x51, 0x59, 0x32, 0xeb, 0xcd, 0xce, 0xfd, 0x29, 0x05, 0x73,
+	0x61, 0xe7, 0x46, 0x0a, 0xe2, 0x28, 0xbc, 0xdc, 0xdd, 0x4f, 0xa9, 0x1e, 0xfc, 0xb4, 0x12, 0x6e,
+	0x5b, 0x85, 0x0e, 0x03, 0x5d, 0x75, 0x68, 0x7c, 0xb8, 0x57, 0xa3, 0x21, 0x1f, 0x3c, 0x44, 0xc8,
+	0x83, 0x60, 0xa5, 0xc3, 0xc1, 0xba, 0xd7, 0xda, 0x1f, 0x0c, 0xc5, 0xc4, 0x2b, 0xda, 0x09, 0xfc,
+	0x91, 0x84, 0x33, 0x22, 0x64, 0xc1, 0x4c, 0xf3, 0x5f, 0xad, 0x89, 0xc0, 0x41, 0x03, 0x61, 0x07,
+	0x9d, 0x87, 0x13, 0x8d, 0x71, 0x2d, 0x4f, 0x0c, 0xe6, 0xfb, 0x61, 0x75, 0xb4, 0x71, 0xb8, 0x66,
+	0xa0, 0x75, 0x18, 0x0b, 0x21, 0x61, 0xd3, 0x10, 0x49, 0xff, 0x4e, 0x58, 0x81, 0x60, 0xe6, 0xe3,
+	0xef, 0x7a, 0x01, 0xad, 0x98, 0x86, 0x1a, 0x92, 0xb0, 0x62, 0x1a, 0xf2, 0xef, 0x49, 0x38, 0x25,
+	0x9c, 0xca, 0x47, 0xc0, 0xff, 0x97, 0x47, 0x4f, 0xc2, 0x90, 0xd7, 0x26, 0x35, 0x7c, 0x99, 0xf6,
+	0xc0, 0x35, 0x03, 0x9d, 0x05, 0x10, 0x33, 0xaf, 0x77, 0x97, 0x66, 0x77, 0xc3, 0xe2, 0x64, 0xcd,
+	0x40, 0x37, 0x61, 0x48, 0x00, 0x22, 0x45, 0xcf, 0x84, 0x94, 0x11, 0xb3, 0xb2, 0xe7, 0x5a, 0xfe,
+	0xa8, 0xfa, 0xc8, 0xf2, 0x2f, 0x29, 0x38, 0xcb, 0xdd, 0xb9, 0xa9, 0xe9, 0x65, 0x4c, 0x97, 0x03,
+	0xc5, 0x8f, 0xc4, 0xa5, 0x97, 0x60, 0xc2, 0xc0, 0x15, 0xad, 0x9e, 0xa7, 0xa4, 0x8a, 0xf3, 0x36,
+	0x76, 0x88, 0x65, 0x30, 0xef, 0x0e, 0xa8, 0xe3, 0xec, 0xe2, 0x09, 0xa9, 0xe2, 0x4d, 0x76, 0x8c,
+	0x2e, 0x03, 0xe2, 0xb8, 0x85, 0x8a, 0xa5, 0x97, 0x7d, 0xe4, 0x01, 0x86, 0x9c, 0x61, 0x37, 0xf7,
+	0xbd, 0x0b, 0x81, 0xfd, 0x3a, 0xde, 0x0f, 0xa1, 0x60, 0x0d, 0xc5, 0x04, 0xeb, 0x78, 0x34, 0x58,
+	0x12, 0x1c, 0x77, 0x3d, 0xef, 0x9a, 0x3a, 0xce, 0x0e, 0x33, 0x7d, 0x03, 0x18, 0x5d, 0xf4, 0x5e,
+	0x87, 0xbe, 0x3e, 0xf9, 0x42, 0xdd, 0x9b, 0xe2, 0x81, 0x09, 0x1d, 0x6f, 0x9c, 0xdf, 0xf7, 0x8e,
+	0xe5, 0x5f, 0x53, 0x7e, 0xc3, 0xc7, 0x63, 0xb7, 0xa4, 0x97, 0x4d, 0x6b, 0xb7, 0x82, 0x8d, 0x12,
+	0x7e, 0x13, 0xc0, 0x23, 0x0b, 0xe0, 0x3c, 0x8c, 0x6b, 0xcd, 0x81, 0xf0, 0xe3, 0x17, 0x39, 0x96,
+	0xbf, 0x0e, 0x3e, 0xe9, 0x3c, 0x7e, 0x2a, 0xd6, 0x31, 0xb1, 0xe9, 0x52, 0xc1, 0xf5, 0x18, 0xbd,
+	0x09, 0xdf, 0x51, 0x84, 0x4f, 0xfe, 0x3e, 0x78, 0x21, 0x7e, 0x8c, 0xf7, 0xe8, 0x96, 0x38, 0x56,
+	0xb1, 0xbe, 0xf3, 0x26, 0x20, 0xaf, 0x2d, 0x20, 0x97, 0x01, 0x99, 0x78, 0x8f, 0xe6, 0xfd, 0x28,
+	0xe4, 0x1d, 0xac, 0xef, 0x88, 0xd0, 0x64, 0xcc, 0x48, 0x1c, 0x16, 0x7f, 0xcc, 0xc0, 0xc8, 0xba,
+	0xe7, 0x1d, 0x31, 0xcc, 0x95, 0x01, 0x1a, 0x7b, 0x3d, 0x74, 0x25, 0x2e, 0x1e, 0x2d, 0xdb, 0x44,
+	0x49, 0xe9, 0x15, 0x5d, 0x0c, 0x4c, 0x2f, 0x60, 0x3c, 0xb2, 0xba, 0x43, 0x8b, 0x71, 0x2c, 0xda,
+	0xaf, 0x0e, 0xa5, 0x6b, 0x07, 0xa2, 0x11, 0xb2, 0x1f, 0xc3, 0x71, 0x7f, 0xcf, 0x87, 0xde, 0x8d,
+	0x63, 0x10, 0xd9, 0x06, 0x4a, 0xd3, 0x2d, 0xfd, 0xea, 0x4a, 0xd5, 0xa6, 0x75, 0x44, 0xe1, 0x44,
+	0xd3, 0x6e, 0x0e, 0x5d, 0xed, 0xa2, 0x56, 0xcb, 0x5e, 0x50, 0x5a, 0x38, 0x00, 0x85, 0x30, 0xa3,
+	0x0c, 0xd0, 0xd8, 0x90, 0xc5, 0xc7, 0xab, 0x65, 0xd9, 0x17, 0x1f, 0xaf, 0x36, 0x8b, 0xb7, 0x3c,
+	0xa4, 0xf9, 0xd6, 0x0b, 0x5d, 0xec, 0x56, 0xa8, 0xc1, 0x8e, 0x4d, 0xba, 0xd4, 0x0b, 0xaa, 0x10,
+	0xb0, 0x0b, 0x63, 0xcd, 0xab, 0x2d, 0x14, 0xeb, 0x92, 0xb6, 0x8b, 0x35, 0x69, 0xf1, 0x20, 0x24,
+	0x42, 0xf0, 0xb7, 0x09, 0x38, 0xd5, 0x71, 0x9d, 0x84, 0xee, 0xc6, 0xe6, 0x75, 0x97, 0xf5, 0x98,
+	0x74, 0xef, 0x90, 0xd4, 0x42, 0xb5, 0xef, 0x12, 0x70, 0x3a, 0x66, 0x4d, 0x82, 0xde, 0x8f, 0x4d,
+	0xde, 0xae, 0x3b, 0x2c, 0xe9, 0x83, 0x43, 0xd3, 0x0b, 0x05, 0xbf, 0x84, 0x4c, 0x74, 0x25, 0x82,
+	0x62, 0x4b, 0xb2, 0xc3, 0x52, 0x46, 0xba, 0x7e, 0x30, 0x22, 0x21, 0x5e, 0x83, 0x89, 0x96, 0x45,
+	0x09, 0xba, 0xde, 0xdd, 0xa8, 0xd6, 0xbd, 0x4a, 0xc7, 0xd2, 0x76, 0x41, 0xea, 0xbc, 0x2e, 0x40,
+	0xf7, 0x7a, 0x95, 0xd5, 0x76, 0xcd, 0xd0, 0x51, 0x28, 0x81, 0xa9, 0xb6, 0x03, 0x2f, 0xba, 0xdd,
+	0x83, 0xbc, 0xb6, 0x33, 0x72, 0x47, 0x51, 0x3a, 0xa0, 0xd6, 0x31, 0x10, 0xdd, 0xe8, 0x41, 0x4e,
+	0xeb, 0xd8, 0xd8, 0x51, 0x48, 0x19, 0xa6, 0xdb, 0x0f, 0x47, 0xe8, 0xbd, 0xee, 0x82, 0x3a, 0x0c,
+	0x54, 0x1d, 0x85, 0xd5, 0xfc, 0x9a, 0x69, 0xdb, 0xcd, 0xf7, 0x52, 0x33, 0x71, 0x63, 0x40, 0xf7,
+	0x44, 0x69, 0xd7, 0x84, 0xf6, 0x92, 0x28, 0x31, 0xcd, 0x6b, 0x77, 0xc7, 0x46, 0x9b, 0xac, 0x5e,
+	0x1c, 0xdb, 0xa1, 0x31, 0xeb, 0x24, 0xec, 0xfe, 0xe3, 0xdf, 0xf6, 0x67, 0x12, 0x2f, 0xf7, 0x67,
+	0x12, 0x7f, 0xef, 0xcf, 0x24, 0xbe, 0x7a, 0x35, 0x73, 0xec, 0xe5, 0xab, 0x99, 0x63, 0x7f, 0xbe,
+	0x9a, 0x39, 0xf6, 0xfc, 0x46, 0x89, 0xd0, 0xed, 0x5a, 0xc1, 0x6b, 0x78, 0x72, 0xde, 0xbb, 0x55,
+	0xdf, 0xd6, 0x88, 0x59, 0xd1, 0x0a, 0xe2, 0x5f, 0xf0, 0x15, 0x52, 0xd0, 0xaf, 0x34, 0xfd, 0x2a,
+	0xa7, 0x75, 0x1b, 0xbb, 0x85, 0x34, 0x13, 0x70, 0xed, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x8c,
+	0x07, 0x6b, 0x7e, 0x4b, 0x1f, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1836,23 +1956,37 @@ const _ = grpc.SupportPackageIsVersion4
 type LightClientClient interface {
 	ClientType(ctx context.Context, in *ClientTypeRequest, opts ...grpc.CallOption) (*ClientTypeResponse, error)
 	GetLatestHeight(ctx context.Context, in *GetLatestHeightRequest, opts ...grpc.CallOption) (*GetLatestHeightResponse, error)
-	IsFrozen(ctx context.Context, in *IsFrozenRequest, opts ...grpc.CallOption) (*IsFrozenResponse, error)
-	GetFrozenHeight(ctx context.Context, in *GetFrozenHeightRequest, opts ...grpc.CallOption) (*GetFrozenHeightResponse, error)
-	Validate(ctx context.Context, in *ValidateRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	Validate(ctx context.Context, in *ValidateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetProofSpecs(ctx context.Context, in *GetProofSpecsRequest, opts ...grpc.CallOption) (*GetProofSpecsResponse, error)
+	// Initialization function
+	// Clients must validate the initial consensus state, and may store any client-specific metadata
+	// necessary for correct light client operation
+	Initialize(ctx context.Context, in *InitializeRequest, opts ...grpc.CallOption) (*InitializeResponse, error)
+	// Status function
+	// Clients must return their status. Only Active clients are allowed to process packets.
+	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// Genesis function
+	ExportMetadata(ctx context.Context, in *ExportMetadataRequest, opts ...grpc.CallOption) (*ExportMetadataResponse, error)
 	CheckHeaderAndUpdateState(ctx context.Context, in *CheckHeaderAndUpdateStateRequest, opts ...grpc.CallOption) (*CheckHeaderAndUpdateStateResponse, error)
-	//rpc CheckMisbehaviourAndUpdateState(CheckMisbehaviourAndUpdateStateRequest) returns (CheckMisbehaviourAndUpdateStateResponse);
-	CheckProposedHeaderAndUpdateState(ctx context.Context, in *CheckProposedHeaderAndUpdateStateRequest, opts ...grpc.CallOption) (*CheckProposedHeaderAndUpdateStateResponse, error)
-	VerifyUpgrade(ctx context.Context, in *VerifyUpgradeRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Upgrade functions
+	// NOTE: proof heights are not included as upgrade to a new revision is expected to pass only on the last
+	// height committed by the current revision. Clients are responsible for ensuring that the planned last
+	// height of the current revision is somehow encoded in the proof verification process.
+	// This is to ensure that no premature upgrades occur, since upgrade plans committed to by the counterparty
+	// may be cancelled or modified before the last planned height.
+	VerifyUpgradeAndUpdateState(ctx context.Context, in *VerifyUpgradeAndUpdateStateRequest, opts ...grpc.CallOption) (*VerifyUpgradeAndUpdateStateResponse, error)
+	// Utility function that zeroes out any client customizable fields in client state
+	// Ledger enforced fields are maintained while all custom fields are zero values
+	// Used to verify upgrades
 	ZeroCustomFields(ctx context.Context, in *ZeroCustomFieldsRequest, opts ...grpc.CallOption) (*ZeroCustomFieldsResponse, error)
-	VerifyClientState(ctx context.Context, in *VerifyClientStateRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyClientConsensusState(ctx context.Context, in *VerifyClientConsensusStateRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyConnectionState(ctx context.Context, in *VerifyConnectionStateRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyChannelState(ctx context.Context, in *VerifyChannelStateRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyPacketCommitment(ctx context.Context, in *VerifyPacketCommitmentRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyPacketAcknowledgement(ctx context.Context, in *VerifyPacketAcknowledgementRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyPacketReceiptAbsence(ctx context.Context, in *VerifyPacketReceiptAbsenceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	VerifyNextSequenceRecv(ctx context.Context, in *VerifyNextSequenceRecvRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	VerifyClientState(ctx context.Context, in *VerifyClientStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyClientConsensusState(ctx context.Context, in *VerifyClientConsensusStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyConnectionState(ctx context.Context, in *VerifyConnectionStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyChannelState(ctx context.Context, in *VerifyChannelStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyPacketCommitment(ctx context.Context, in *VerifyPacketCommitmentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyPacketAcknowledgement(ctx context.Context, in *VerifyPacketAcknowledgementRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyPacketReceiptAbsence(ctx context.Context, in *VerifyPacketReceiptAbsenceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	VerifyNextSequenceRecv(ctx context.Context, in *VerifyNextSequenceRecvRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type lightClientClient struct {
@@ -1881,26 +2015,8 @@ func (c *lightClientClient) GetLatestHeight(ctx context.Context, in *GetLatestHe
 	return out, nil
 }
 
-func (c *lightClientClient) IsFrozen(ctx context.Context, in *IsFrozenRequest, opts ...grpc.CallOption) (*IsFrozenResponse, error) {
-	out := new(IsFrozenResponse)
-	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/IsFrozen", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *lightClientClient) GetFrozenHeight(ctx context.Context, in *GetFrozenHeightRequest, opts ...grpc.CallOption) (*GetFrozenHeightResponse, error) {
-	out := new(GetFrozenHeightResponse)
-	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/GetFrozenHeight", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *lightClientClient) Validate(ctx context.Context, in *ValidateRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) Validate(ctx context.Context, in *ValidateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/Validate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1917,6 +2033,33 @@ func (c *lightClientClient) GetProofSpecs(ctx context.Context, in *GetProofSpecs
 	return out, nil
 }
 
+func (c *lightClientClient) Initialize(ctx context.Context, in *InitializeRequest, opts ...grpc.CallOption) (*InitializeResponse, error) {
+	out := new(InitializeResponse)
+	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/Initialize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lightClientClient) Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+	out := new(StatusResponse)
+	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/Status", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lightClientClient) ExportMetadata(ctx context.Context, in *ExportMetadataRequest, opts ...grpc.CallOption) (*ExportMetadataResponse, error) {
+	out := new(ExportMetadataResponse)
+	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/ExportMetadata", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lightClientClient) CheckHeaderAndUpdateState(ctx context.Context, in *CheckHeaderAndUpdateStateRequest, opts ...grpc.CallOption) (*CheckHeaderAndUpdateStateResponse, error) {
 	out := new(CheckHeaderAndUpdateStateResponse)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/CheckHeaderAndUpdateState", in, out, opts...)
@@ -1926,18 +2069,9 @@ func (c *lightClientClient) CheckHeaderAndUpdateState(ctx context.Context, in *C
 	return out, nil
 }
 
-func (c *lightClientClient) CheckProposedHeaderAndUpdateState(ctx context.Context, in *CheckProposedHeaderAndUpdateStateRequest, opts ...grpc.CallOption) (*CheckProposedHeaderAndUpdateStateResponse, error) {
-	out := new(CheckProposedHeaderAndUpdateStateResponse)
-	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/CheckProposedHeaderAndUpdateState", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *lightClientClient) VerifyUpgrade(ctx context.Context, in *VerifyUpgradeRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyUpgrade", in, out, opts...)
+func (c *lightClientClient) VerifyUpgradeAndUpdateState(ctx context.Context, in *VerifyUpgradeAndUpdateStateRequest, opts ...grpc.CallOption) (*VerifyUpgradeAndUpdateStateResponse, error) {
+	out := new(VerifyUpgradeAndUpdateStateResponse)
+	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyUpgradeAndUpdateState", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1953,8 +2087,8 @@ func (c *lightClientClient) ZeroCustomFields(ctx context.Context, in *ZeroCustom
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyClientState(ctx context.Context, in *VerifyClientStateRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyClientState(ctx context.Context, in *VerifyClientStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyClientState", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1962,8 +2096,8 @@ func (c *lightClientClient) VerifyClientState(ctx context.Context, in *VerifyCli
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyClientConsensusState(ctx context.Context, in *VerifyClientConsensusStateRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyClientConsensusState(ctx context.Context, in *VerifyClientConsensusStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyClientConsensusState", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1971,8 +2105,8 @@ func (c *lightClientClient) VerifyClientConsensusState(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyConnectionState(ctx context.Context, in *VerifyConnectionStateRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyConnectionState(ctx context.Context, in *VerifyConnectionStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyConnectionState", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1980,8 +2114,8 @@ func (c *lightClientClient) VerifyConnectionState(ctx context.Context, in *Verif
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyChannelState(ctx context.Context, in *VerifyChannelStateRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyChannelState(ctx context.Context, in *VerifyChannelStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyChannelState", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1989,8 +2123,8 @@ func (c *lightClientClient) VerifyChannelState(ctx context.Context, in *VerifyCh
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyPacketCommitment(ctx context.Context, in *VerifyPacketCommitmentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyPacketCommitment(ctx context.Context, in *VerifyPacketCommitmentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyPacketCommitment", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1998,8 +2132,8 @@ func (c *lightClientClient) VerifyPacketCommitment(ctx context.Context, in *Veri
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyPacketAcknowledgement(ctx context.Context, in *VerifyPacketAcknowledgementRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyPacketAcknowledgement(ctx context.Context, in *VerifyPacketAcknowledgementRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyPacketAcknowledgement", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -2007,8 +2141,8 @@ func (c *lightClientClient) VerifyPacketAcknowledgement(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyPacketReceiptAbsence(ctx context.Context, in *VerifyPacketReceiptAbsenceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyPacketReceiptAbsence(ctx context.Context, in *VerifyPacketReceiptAbsenceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyPacketReceiptAbsence", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -2016,8 +2150,8 @@ func (c *lightClientClient) VerifyPacketReceiptAbsence(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *lightClientClient) VerifyNextSequenceRecv(ctx context.Context, in *VerifyNextSequenceRecvRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *lightClientClient) VerifyNextSequenceRecv(ctx context.Context, in *VerifyNextSequenceRecvRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ibc.lightclientd.fabric.v1.LightClient/VerifyNextSequenceRecv", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -2029,23 +2163,37 @@ func (c *lightClientClient) VerifyNextSequenceRecv(ctx context.Context, in *Veri
 type LightClientServer interface {
 	ClientType(context.Context, *ClientTypeRequest) (*ClientTypeResponse, error)
 	GetLatestHeight(context.Context, *GetLatestHeightRequest) (*GetLatestHeightResponse, error)
-	IsFrozen(context.Context, *IsFrozenRequest) (*IsFrozenResponse, error)
-	GetFrozenHeight(context.Context, *GetFrozenHeightRequest) (*GetFrozenHeightResponse, error)
-	Validate(context.Context, *ValidateRequest) (*empty.Empty, error)
+	Validate(context.Context, *ValidateRequest) (*emptypb.Empty, error)
 	GetProofSpecs(context.Context, *GetProofSpecsRequest) (*GetProofSpecsResponse, error)
+	// Initialization function
+	// Clients must validate the initial consensus state, and may store any client-specific metadata
+	// necessary for correct light client operation
+	Initialize(context.Context, *InitializeRequest) (*InitializeResponse, error)
+	// Status function
+	// Clients must return their status. Only Active clients are allowed to process packets.
+	Status(context.Context, *StatusRequest) (*StatusResponse, error)
+	// Genesis function
+	ExportMetadata(context.Context, *ExportMetadataRequest) (*ExportMetadataResponse, error)
 	CheckHeaderAndUpdateState(context.Context, *CheckHeaderAndUpdateStateRequest) (*CheckHeaderAndUpdateStateResponse, error)
-	//rpc CheckMisbehaviourAndUpdateState(CheckMisbehaviourAndUpdateStateRequest) returns (CheckMisbehaviourAndUpdateStateResponse);
-	CheckProposedHeaderAndUpdateState(context.Context, *CheckProposedHeaderAndUpdateStateRequest) (*CheckProposedHeaderAndUpdateStateResponse, error)
-	VerifyUpgrade(context.Context, *VerifyUpgradeRequest) (*empty.Empty, error)
+	// Upgrade functions
+	// NOTE: proof heights are not included as upgrade to a new revision is expected to pass only on the last
+	// height committed by the current revision. Clients are responsible for ensuring that the planned last
+	// height of the current revision is somehow encoded in the proof verification process.
+	// This is to ensure that no premature upgrades occur, since upgrade plans committed to by the counterparty
+	// may be cancelled or modified before the last planned height.
+	VerifyUpgradeAndUpdateState(context.Context, *VerifyUpgradeAndUpdateStateRequest) (*VerifyUpgradeAndUpdateStateResponse, error)
+	// Utility function that zeroes out any client customizable fields in client state
+	// Ledger enforced fields are maintained while all custom fields are zero values
+	// Used to verify upgrades
 	ZeroCustomFields(context.Context, *ZeroCustomFieldsRequest) (*ZeroCustomFieldsResponse, error)
-	VerifyClientState(context.Context, *VerifyClientStateRequest) (*empty.Empty, error)
-	VerifyClientConsensusState(context.Context, *VerifyClientConsensusStateRequest) (*empty.Empty, error)
-	VerifyConnectionState(context.Context, *VerifyConnectionStateRequest) (*empty.Empty, error)
-	VerifyChannelState(context.Context, *VerifyChannelStateRequest) (*empty.Empty, error)
-	VerifyPacketCommitment(context.Context, *VerifyPacketCommitmentRequest) (*empty.Empty, error)
-	VerifyPacketAcknowledgement(context.Context, *VerifyPacketAcknowledgementRequest) (*empty.Empty, error)
-	VerifyPacketReceiptAbsence(context.Context, *VerifyPacketReceiptAbsenceRequest) (*empty.Empty, error)
-	VerifyNextSequenceRecv(context.Context, *VerifyNextSequenceRecvRequest) (*empty.Empty, error)
+	VerifyClientState(context.Context, *VerifyClientStateRequest) (*emptypb.Empty, error)
+	VerifyClientConsensusState(context.Context, *VerifyClientConsensusStateRequest) (*emptypb.Empty, error)
+	VerifyConnectionState(context.Context, *VerifyConnectionStateRequest) (*emptypb.Empty, error)
+	VerifyChannelState(context.Context, *VerifyChannelStateRequest) (*emptypb.Empty, error)
+	VerifyPacketCommitment(context.Context, *VerifyPacketCommitmentRequest) (*emptypb.Empty, error)
+	VerifyPacketAcknowledgement(context.Context, *VerifyPacketAcknowledgementRequest) (*emptypb.Empty, error)
+	VerifyPacketReceiptAbsence(context.Context, *VerifyPacketReceiptAbsenceRequest) (*emptypb.Empty, error)
+	VerifyNextSequenceRecv(context.Context, *VerifyNextSequenceRecvRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedLightClientServer can be embedded to have forward compatible implementations.
@@ -2058,52 +2206,52 @@ func (*UnimplementedLightClientServer) ClientType(ctx context.Context, req *Clie
 func (*UnimplementedLightClientServer) GetLatestHeight(ctx context.Context, req *GetLatestHeightRequest) (*GetLatestHeightResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLatestHeight not implemented")
 }
-func (*UnimplementedLightClientServer) IsFrozen(ctx context.Context, req *IsFrozenRequest) (*IsFrozenResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsFrozen not implemented")
-}
-func (*UnimplementedLightClientServer) GetFrozenHeight(ctx context.Context, req *GetFrozenHeightRequest) (*GetFrozenHeightResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFrozenHeight not implemented")
-}
-func (*UnimplementedLightClientServer) Validate(ctx context.Context, req *ValidateRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) Validate(ctx context.Context, req *ValidateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Validate not implemented")
 }
 func (*UnimplementedLightClientServer) GetProofSpecs(ctx context.Context, req *GetProofSpecsRequest) (*GetProofSpecsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProofSpecs not implemented")
 }
+func (*UnimplementedLightClientServer) Initialize(ctx context.Context, req *InitializeRequest) (*InitializeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Initialize not implemented")
+}
+func (*UnimplementedLightClientServer) Status(ctx context.Context, req *StatusRequest) (*StatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
+}
+func (*UnimplementedLightClientServer) ExportMetadata(ctx context.Context, req *ExportMetadataRequest) (*ExportMetadataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportMetadata not implemented")
+}
 func (*UnimplementedLightClientServer) CheckHeaderAndUpdateState(ctx context.Context, req *CheckHeaderAndUpdateStateRequest) (*CheckHeaderAndUpdateStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckHeaderAndUpdateState not implemented")
 }
-func (*UnimplementedLightClientServer) CheckProposedHeaderAndUpdateState(ctx context.Context, req *CheckProposedHeaderAndUpdateStateRequest) (*CheckProposedHeaderAndUpdateStateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckProposedHeaderAndUpdateState not implemented")
-}
-func (*UnimplementedLightClientServer) VerifyUpgrade(ctx context.Context, req *VerifyUpgradeRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method VerifyUpgrade not implemented")
+func (*UnimplementedLightClientServer) VerifyUpgradeAndUpdateState(ctx context.Context, req *VerifyUpgradeAndUpdateStateRequest) (*VerifyUpgradeAndUpdateStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyUpgradeAndUpdateState not implemented")
 }
 func (*UnimplementedLightClientServer) ZeroCustomFields(ctx context.Context, req *ZeroCustomFieldsRequest) (*ZeroCustomFieldsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ZeroCustomFields not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyClientState(ctx context.Context, req *VerifyClientStateRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyClientState(ctx context.Context, req *VerifyClientStateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyClientState not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyClientConsensusState(ctx context.Context, req *VerifyClientConsensusStateRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyClientConsensusState(ctx context.Context, req *VerifyClientConsensusStateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyClientConsensusState not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyConnectionState(ctx context.Context, req *VerifyConnectionStateRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyConnectionState(ctx context.Context, req *VerifyConnectionStateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyConnectionState not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyChannelState(ctx context.Context, req *VerifyChannelStateRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyChannelState(ctx context.Context, req *VerifyChannelStateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyChannelState not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyPacketCommitment(ctx context.Context, req *VerifyPacketCommitmentRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyPacketCommitment(ctx context.Context, req *VerifyPacketCommitmentRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyPacketCommitment not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyPacketAcknowledgement(ctx context.Context, req *VerifyPacketAcknowledgementRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyPacketAcknowledgement(ctx context.Context, req *VerifyPacketAcknowledgementRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyPacketAcknowledgement not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyPacketReceiptAbsence(ctx context.Context, req *VerifyPacketReceiptAbsenceRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyPacketReceiptAbsence(ctx context.Context, req *VerifyPacketReceiptAbsenceRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyPacketReceiptAbsence not implemented")
 }
-func (*UnimplementedLightClientServer) VerifyNextSequenceRecv(ctx context.Context, req *VerifyNextSequenceRecvRequest) (*empty.Empty, error) {
+func (*UnimplementedLightClientServer) VerifyNextSequenceRecv(ctx context.Context, req *VerifyNextSequenceRecvRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyNextSequenceRecv not implemented")
 }
 
@@ -2147,42 +2295,6 @@ func _LightClient_GetLatestHeight_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LightClient_IsFrozen_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsFrozenRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LightClientServer).IsFrozen(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/IsFrozen",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LightClientServer).IsFrozen(ctx, req.(*IsFrozenRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LightClient_GetFrozenHeight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFrozenHeightRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LightClientServer).GetFrozenHeight(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/GetFrozenHeight",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LightClientServer).GetFrozenHeight(ctx, req.(*GetFrozenHeightRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _LightClient_Validate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateRequest)
 	if err := dec(in); err != nil {
@@ -2219,6 +2331,60 @@ func _LightClient_GetProofSpecs_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LightClient_Initialize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InitializeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LightClientServer).Initialize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/Initialize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LightClientServer).Initialize(ctx, req.(*InitializeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LightClient_Status_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LightClientServer).Status(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/Status",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LightClientServer).Status(ctx, req.(*StatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LightClient_ExportMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportMetadataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LightClientServer).ExportMetadata(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/ExportMetadata",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LightClientServer).ExportMetadata(ctx, req.(*ExportMetadataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LightClient_CheckHeaderAndUpdateState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CheckHeaderAndUpdateStateRequest)
 	if err := dec(in); err != nil {
@@ -2237,38 +2403,20 @@ func _LightClient_CheckHeaderAndUpdateState_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LightClient_CheckProposedHeaderAndUpdateState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckProposedHeaderAndUpdateStateRequest)
+func _LightClient_VerifyUpgradeAndUpdateState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyUpgradeAndUpdateStateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LightClientServer).CheckProposedHeaderAndUpdateState(ctx, in)
+		return srv.(LightClientServer).VerifyUpgradeAndUpdateState(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/CheckProposedHeaderAndUpdateState",
+		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/VerifyUpgradeAndUpdateState",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LightClientServer).CheckProposedHeaderAndUpdateState(ctx, req.(*CheckProposedHeaderAndUpdateStateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LightClient_VerifyUpgrade_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyUpgradeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LightClientServer).VerifyUpgrade(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ibc.lightclientd.fabric.v1.LightClient/VerifyUpgrade",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LightClientServer).VerifyUpgrade(ctx, req.(*VerifyUpgradeRequest))
+		return srv.(LightClientServer).VerifyUpgradeAndUpdateState(ctx, req.(*VerifyUpgradeAndUpdateStateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2448,14 +2596,6 @@ var _LightClient_serviceDesc = grpc.ServiceDesc{
 			Handler:    _LightClient_GetLatestHeight_Handler,
 		},
 		{
-			MethodName: "IsFrozen",
-			Handler:    _LightClient_IsFrozen_Handler,
-		},
-		{
-			MethodName: "GetFrozenHeight",
-			Handler:    _LightClient_GetFrozenHeight_Handler,
-		},
-		{
 			MethodName: "Validate",
 			Handler:    _LightClient_Validate_Handler,
 		},
@@ -2464,16 +2604,24 @@ var _LightClient_serviceDesc = grpc.ServiceDesc{
 			Handler:    _LightClient_GetProofSpecs_Handler,
 		},
 		{
+			MethodName: "Initialize",
+			Handler:    _LightClient_Initialize_Handler,
+		},
+		{
+			MethodName: "Status",
+			Handler:    _LightClient_Status_Handler,
+		},
+		{
+			MethodName: "ExportMetadata",
+			Handler:    _LightClient_ExportMetadata_Handler,
+		},
+		{
 			MethodName: "CheckHeaderAndUpdateState",
 			Handler:    _LightClient_CheckHeaderAndUpdateState_Handler,
 		},
 		{
-			MethodName: "CheckProposedHeaderAndUpdateState",
-			Handler:    _LightClient_CheckProposedHeaderAndUpdateState_Handler,
-		},
-		{
-			MethodName: "VerifyUpgrade",
-			Handler:    _LightClient_VerifyUpgrade_Handler,
+			MethodName: "VerifyUpgradeAndUpdateState",
+			Handler:    _LightClient_VerifyUpgradeAndUpdateState_Handler,
 		},
 		{
 			MethodName: "ZeroCustomFields",
@@ -2717,144 +2865,6 @@ func (m *GetLatestHeightResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *IsFrozenRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *IsFrozenRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *IsFrozenRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.State != nil {
-		{
-			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintFabric(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *IsFrozenResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *IsFrozenResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *IsFrozenResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.IsFrozen {
-		i--
-		if m.IsFrozen {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *GetFrozenHeightRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetFrozenHeightRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetFrozenHeightRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.State != nil {
-		{
-			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintFabric(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *GetFrozenHeightResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetFrozenHeightResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetFrozenHeightResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.Height != nil {
-		{
-			size, err := m.Height.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintFabric(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
 func (m *ValidateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2962,6 +2972,225 @@ func (m *GetProofSpecsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *InitializeRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *InitializeRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InitializeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.ConsensusState != nil {
+		{
+			size, err := m.ConsensusState.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintFabric(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.State != nil {
+		{
+			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintFabric(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *InitializeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *InitializeResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InitializeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.State != nil {
+		{
+			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintFabric(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StatusRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StatusRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StatusRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.State != nil {
+		{
+			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintFabric(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StatusResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StatusResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StatusResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Status) > 0 {
+		i -= len(m.Status)
+		copy(dAtA[i:], m.Status)
+		i = encodeVarintFabric(dAtA, i, uint64(len(m.Status)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ExportMetadataRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExportMetadataRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ExportMetadataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.State != nil {
+		{
+			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintFabric(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ExportMetadataResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExportMetadataResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ExportMetadataResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.GenesisMetadatas) > 0 {
+		for iNdEx := len(m.GenesisMetadatas) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.GenesisMetadatas[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintFabric(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *CheckHeaderAndUpdateStateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -3044,7 +3273,7 @@ func (m *CheckHeaderAndUpdateStateResponse) MarshalToSizedBuffer(dAtA []byte) (i
 	return len(dAtA) - i, nil
 }
 
-func (m *CheckProposedHeaderAndUpdateStateRequest) Marshal() (dAtA []byte, err error) {
+func (m *VerifyUpgradeAndUpdateStateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -3054,108 +3283,33 @@ func (m *CheckProposedHeaderAndUpdateStateRequest) Marshal() (dAtA []byte, err e
 	return dAtA[:n], nil
 }
 
-func (m *CheckProposedHeaderAndUpdateStateRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *VerifyUpgradeAndUpdateStateRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *CheckProposedHeaderAndUpdateStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *VerifyUpgradeAndUpdateStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintFabric(dAtA, i, uint64(size))
-		}
+	if len(m.ProofUpgradeConsState) > 0 {
+		i -= len(m.ProofUpgradeConsState)
+		copy(dAtA[i:], m.ProofUpgradeConsState)
+		i = encodeVarintFabric(dAtA, i, uint64(len(m.ProofUpgradeConsState)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x2a
 	}
-	if m.State != nil {
-		{
-			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintFabric(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CheckProposedHeaderAndUpdateStateResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CheckProposedHeaderAndUpdateStateResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CheckProposedHeaderAndUpdateStateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.State != nil {
-		{
-			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintFabric(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *VerifyUpgradeRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *VerifyUpgradeRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *VerifyUpgradeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.ProofUpgrade) > 0 {
-		i -= len(m.ProofUpgrade)
-		copy(dAtA[i:], m.ProofUpgrade)
-		i = encodeVarintFabric(dAtA, i, uint64(len(m.ProofUpgrade)))
+	if len(m.ProofUpgradeClient) > 0 {
+		i -= len(m.ProofUpgradeClient)
+		copy(dAtA[i:], m.ProofUpgradeClient)
+		i = encodeVarintFabric(dAtA, i, uint64(len(m.ProofUpgradeClient)))
 		i--
 		dAtA[i] = 0x22
 	}
-	if m.UpgradeHeight != nil {
+	if m.NewConsState != nil {
 		{
-			size, err := m.UpgradeHeight.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.NewConsState.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -3177,6 +3331,41 @@ func (m *VerifyUpgradeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
+	if m.State != nil {
+		{
+			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintFabric(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *VerifyUpgradeAndUpdateStateResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *VerifyUpgradeAndUpdateStateResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *VerifyUpgradeAndUpdateStateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	if m.State != nil {
 		{
 			size, err := m.State.MarshalToSizedBuffer(dAtA[:i])
@@ -3646,33 +3835,33 @@ func (m *VerifyPacketCommitmentRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 		copy(dAtA[i:], m.CommitmentBytes)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.CommitmentBytes)))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x52
 	}
 	if m.Sequence != 0 {
 		i = encodeVarintFabric(dAtA, i, uint64(m.Sequence))
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x48
 	}
 	if len(m.ChannelId) > 0 {
 		i -= len(m.ChannelId)
 		copy(dAtA[i:], m.ChannelId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.ChannelId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x42
 	}
 	if len(m.PortId) > 0 {
 		i -= len(m.PortId)
 		copy(dAtA[i:], m.PortId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.PortId)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x3a
 	}
 	if len(m.Proof) > 0 {
 		i -= len(m.Proof)
 		copy(dAtA[i:], m.Proof)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.Proof)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x32
 	}
 	if m.Prefix != nil {
 		{
@@ -3684,7 +3873,17 @@ func (m *VerifyPacketCommitmentRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 			i = encodeVarintFabric(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x2a
+	}
+	if m.DelayBlockPeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayBlockPeriod))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.DelayTimePeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayTimePeriod))
+		i--
+		dAtA[i] = 0x18
 	}
 	if m.Height != nil {
 		{
@@ -3738,33 +3937,33 @@ func (m *VerifyPacketAcknowledgementRequest) MarshalToSizedBuffer(dAtA []byte) (
 		copy(dAtA[i:], m.Acknowledgement)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.Acknowledgement)))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x52
 	}
 	if m.Sequence != 0 {
 		i = encodeVarintFabric(dAtA, i, uint64(m.Sequence))
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x48
 	}
 	if len(m.ChannelId) > 0 {
 		i -= len(m.ChannelId)
 		copy(dAtA[i:], m.ChannelId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.ChannelId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x42
 	}
 	if len(m.PortId) > 0 {
 		i -= len(m.PortId)
 		copy(dAtA[i:], m.PortId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.PortId)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x3a
 	}
 	if len(m.Proof) > 0 {
 		i -= len(m.Proof)
 		copy(dAtA[i:], m.Proof)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.Proof)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x32
 	}
 	if m.Prefix != nil {
 		{
@@ -3776,7 +3975,17 @@ func (m *VerifyPacketAcknowledgementRequest) MarshalToSizedBuffer(dAtA []byte) (
 			i = encodeVarintFabric(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x2a
+	}
+	if m.DelayBlockPeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayBlockPeriod))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.DelayTimePeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayTimePeriod))
+		i--
+		dAtA[i] = 0x18
 	}
 	if m.Height != nil {
 		{
@@ -3828,28 +4037,28 @@ func (m *VerifyPacketReceiptAbsenceRequest) MarshalToSizedBuffer(dAtA []byte) (i
 	if m.Sequence != 0 {
 		i = encodeVarintFabric(dAtA, i, uint64(m.Sequence))
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x48
 	}
 	if len(m.ChannelId) > 0 {
 		i -= len(m.ChannelId)
 		copy(dAtA[i:], m.ChannelId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.ChannelId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x42
 	}
 	if len(m.PortId) > 0 {
 		i -= len(m.PortId)
 		copy(dAtA[i:], m.PortId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.PortId)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x3a
 	}
 	if len(m.Proof) > 0 {
 		i -= len(m.Proof)
 		copy(dAtA[i:], m.Proof)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.Proof)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x32
 	}
 	if m.Prefix != nil {
 		{
@@ -3861,7 +4070,17 @@ func (m *VerifyPacketReceiptAbsenceRequest) MarshalToSizedBuffer(dAtA []byte) (i
 			i = encodeVarintFabric(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x2a
+	}
+	if m.DelayBlockPeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayBlockPeriod))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.DelayTimePeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayTimePeriod))
+		i--
+		dAtA[i] = 0x18
 	}
 	if m.Height != nil {
 		{
@@ -3913,28 +4132,28 @@ func (m *VerifyNextSequenceRecvRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 	if m.NextSequenceRecv != 0 {
 		i = encodeVarintFabric(dAtA, i, uint64(m.NextSequenceRecv))
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x48
 	}
 	if len(m.ChannelId) > 0 {
 		i -= len(m.ChannelId)
 		copy(dAtA[i:], m.ChannelId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.ChannelId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x42
 	}
 	if len(m.PortId) > 0 {
 		i -= len(m.PortId)
 		copy(dAtA[i:], m.PortId)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.PortId)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x3a
 	}
 	if len(m.Proof) > 0 {
 		i -= len(m.Proof)
 		copy(dAtA[i:], m.Proof)
 		i = encodeVarintFabric(dAtA, i, uint64(len(m.Proof)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x32
 	}
 	if m.Prefix != nil {
 		{
@@ -3946,7 +4165,17 @@ func (m *VerifyNextSequenceRecvRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 			i = encodeVarintFabric(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x2a
+	}
+	if m.DelayBlockPeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayBlockPeriod))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.DelayTimePeriod != 0 {
+		i = encodeVarintFabric(dAtA, i, uint64(m.DelayTimePeriod))
+		i--
+		dAtA[i] = 0x18
 	}
 	if m.Height != nil {
 		{
@@ -4068,57 +4297,6 @@ func (m *GetLatestHeightResponse) Size() (n int) {
 	return n
 }
 
-func (m *IsFrozenRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.State != nil {
-		l = m.State.Size()
-		n += 1 + l + sovFabric(uint64(l))
-	}
-	return n
-}
-
-func (m *IsFrozenResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.IsFrozen {
-		n += 2
-	}
-	return n
-}
-
-func (m *GetFrozenHeightRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.State != nil {
-		l = m.State.Size()
-		n += 1 + l + sovFabric(uint64(l))
-	}
-	return n
-}
-
-func (m *GetFrozenHeightResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Height != nil {
-		l = m.Height.Size()
-		n += 1 + l + sovFabric(uint64(l))
-	}
-	return n
-}
-
 func (m *ValidateRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -4160,6 +4338,90 @@ func (m *GetProofSpecsResponse) Size() (n int) {
 	return n
 }
 
+func (m *InitializeRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != nil {
+		l = m.State.Size()
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	if m.ConsensusState != nil {
+		l = m.ConsensusState.Size()
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	return n
+}
+
+func (m *InitializeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != nil {
+		l = m.State.Size()
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	return n
+}
+
+func (m *StatusRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != nil {
+		l = m.State.Size()
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	return n
+}
+
+func (m *StatusResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Status)
+	if l > 0 {
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	return n
+}
+
+func (m *ExportMetadataRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != nil {
+		l = m.State.Size()
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	return n
+}
+
+func (m *ExportMetadataResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.GenesisMetadatas) > 0 {
+		for _, e := range m.GenesisMetadatas {
+			l = e.Size()
+			n += 1 + l + sovFabric(uint64(l))
+		}
+	}
+	return n
+}
+
 func (m *CheckHeaderAndUpdateStateRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -4190,37 +4452,7 @@ func (m *CheckHeaderAndUpdateStateResponse) Size() (n int) {
 	return n
 }
 
-func (m *CheckProposedHeaderAndUpdateStateRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.State != nil {
-		l = m.State.Size()
-		n += 1 + l + sovFabric(uint64(l))
-	}
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovFabric(uint64(l))
-	}
-	return n
-}
-
-func (m *CheckProposedHeaderAndUpdateStateResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.State != nil {
-		l = m.State.Size()
-		n += 1 + l + sovFabric(uint64(l))
-	}
-	return n
-}
-
-func (m *VerifyUpgradeRequest) Size() (n int) {
+func (m *VerifyUpgradeAndUpdateStateRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -4234,12 +4466,29 @@ func (m *VerifyUpgradeRequest) Size() (n int) {
 		l = m.NewClient.Size()
 		n += 1 + l + sovFabric(uint64(l))
 	}
-	if m.UpgradeHeight != nil {
-		l = m.UpgradeHeight.Size()
+	if m.NewConsState != nil {
+		l = m.NewConsState.Size()
 		n += 1 + l + sovFabric(uint64(l))
 	}
-	l = len(m.ProofUpgrade)
+	l = len(m.ProofUpgradeClient)
 	if l > 0 {
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	l = len(m.ProofUpgradeConsState)
+	if l > 0 {
+		n += 1 + l + sovFabric(uint64(l))
+	}
+	return n
+}
+
+func (m *VerifyUpgradeAndUpdateStateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != nil {
+		l = m.State.Size()
 		n += 1 + l + sovFabric(uint64(l))
 	}
 	return n
@@ -4425,6 +4674,12 @@ func (m *VerifyPacketCommitmentRequest) Size() (n int) {
 		l = m.Height.Size()
 		n += 1 + l + sovFabric(uint64(l))
 	}
+	if m.DelayTimePeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayTimePeriod))
+	}
+	if m.DelayBlockPeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayBlockPeriod))
+	}
 	if m.Prefix != nil {
 		l = m.Prefix.Size()
 		n += 1 + l + sovFabric(uint64(l))
@@ -4464,6 +4719,12 @@ func (m *VerifyPacketAcknowledgementRequest) Size() (n int) {
 	if m.Height != nil {
 		l = m.Height.Size()
 		n += 1 + l + sovFabric(uint64(l))
+	}
+	if m.DelayTimePeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayTimePeriod))
+	}
+	if m.DelayBlockPeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayBlockPeriod))
 	}
 	if m.Prefix != nil {
 		l = m.Prefix.Size()
@@ -4505,6 +4766,12 @@ func (m *VerifyPacketReceiptAbsenceRequest) Size() (n int) {
 		l = m.Height.Size()
 		n += 1 + l + sovFabric(uint64(l))
 	}
+	if m.DelayTimePeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayTimePeriod))
+	}
+	if m.DelayBlockPeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayBlockPeriod))
+	}
 	if m.Prefix != nil {
 		l = m.Prefix.Size()
 		n += 1 + l + sovFabric(uint64(l))
@@ -4540,6 +4807,12 @@ func (m *VerifyNextSequenceRecvRequest) Size() (n int) {
 	if m.Height != nil {
 		l = m.Height.Size()
 		n += 1 + l + sovFabric(uint64(l))
+	}
+	if m.DelayTimePeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayTimePeriod))
+	}
+	if m.DelayBlockPeriod != 0 {
+		n += 1 + sovFabric(uint64(m.DelayBlockPeriod))
 	}
 	if m.Prefix != nil {
 		l = m.Prefix.Size()
@@ -5157,346 +5430,6 @@ func (m *GetLatestHeightResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *IsFrozenRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowFabric
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: IsFrozenRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: IsFrozenRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthFabric
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.State == nil {
-				m.State = &State{}
-			}
-			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipFabric(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *IsFrozenResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowFabric
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: IsFrozenResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: IsFrozenResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IsFrozen", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.IsFrozen = bool(v != 0)
-		default:
-			iNdEx = preIndex
-			skippy, err := skipFabric(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *GetFrozenHeightRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowFabric
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetFrozenHeightRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetFrozenHeightRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthFabric
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.State == nil {
-				m.State = &State{}
-			}
-			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipFabric(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *GetFrozenHeightResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowFabric
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetFrozenHeightResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetFrozenHeightResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthFabric
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Height == nil {
-				m.Height = &types1.Height{}
-			}
-			if err := m.Height.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipFabric(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *ValidateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -5762,6 +5695,570 @@ func (m *GetProofSpecsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *InitializeRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: InitializeRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: InitializeRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.State == nil {
+				m.State = &State{}
+			}
+			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConsensusState", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ConsensusState == nil {
+				m.ConsensusState = &types.ConsensusState{}
+			}
+			if err := m.ConsensusState.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *InitializeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: InitializeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: InitializeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.State == nil {
+				m.State = &State{}
+			}
+			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StatusRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StatusRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StatusRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.State == nil {
+				m.State = &State{}
+			}
+			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StatusResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StatusResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StatusResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Status = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ExportMetadataRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExportMetadataRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExportMetadataRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.State == nil {
+				m.State = &State{}
+			}
+			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ExportMetadataResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExportMetadataResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExportMetadataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field GenesisMetadatas", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.GenesisMetadatas = append(m.GenesisMetadatas, &types1.GenesisMetadata{})
+			if err := m.GenesisMetadatas[len(m.GenesisMetadatas)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *CheckHeaderAndUpdateStateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -5976,7 +6473,7 @@ func (m *CheckHeaderAndUpdateStateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *CheckProposedHeaderAndUpdateStateRequest) Unmarshal(dAtA []byte) error {
+func (m *VerifyUpgradeAndUpdateStateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -5999,224 +6496,10 @@ func (m *CheckProposedHeaderAndUpdateStateRequest) Unmarshal(dAtA []byte) error 
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: CheckProposedHeaderAndUpdateStateRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: VerifyUpgradeAndUpdateStateRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CheckProposedHeaderAndUpdateStateRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthFabric
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.State == nil {
-				m.State = &State{}
-			}
-			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthFabric
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &types.Header{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipFabric(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CheckProposedHeaderAndUpdateStateResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowFabric
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CheckProposedHeaderAndUpdateStateResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CheckProposedHeaderAndUpdateStateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowFabric
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthFabric
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.State == nil {
-				m.State = &State{}
-			}
-			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipFabric(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthFabric
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *VerifyUpgradeRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowFabric
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: VerifyUpgradeRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: VerifyUpgradeRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: VerifyUpgradeAndUpdateStateRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -6293,7 +6576,7 @@ func (m *VerifyUpgradeRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field UpgradeHeight", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field NewConsState", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -6320,16 +6603,16 @@ func (m *VerifyUpgradeRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.UpgradeHeight == nil {
-				m.UpgradeHeight = &types1.Height{}
+			if m.NewConsState == nil {
+				m.NewConsState = &types.ConsensusState{}
 			}
-			if err := m.UpgradeHeight.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.NewConsState.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ProofUpgrade", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ProofUpgradeClient", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -6356,9 +6639,132 @@ func (m *VerifyUpgradeRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ProofUpgrade = append(m.ProofUpgrade[:0], dAtA[iNdEx:postIndex]...)
-			if m.ProofUpgrade == nil {
-				m.ProofUpgrade = []byte{}
+			m.ProofUpgradeClient = append(m.ProofUpgradeClient[:0], dAtA[iNdEx:postIndex]...)
+			if m.ProofUpgradeClient == nil {
+				m.ProofUpgradeClient = []byte{}
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProofUpgradeConsState", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProofUpgradeConsState = append(m.ProofUpgradeConsState[:0], dAtA[iNdEx:postIndex]...)
+			if m.ProofUpgradeConsState == nil {
+				m.ProofUpgradeConsState = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFabric(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *VerifyUpgradeAndUpdateStateResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFabric
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: VerifyUpgradeAndUpdateStateResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: VerifyUpgradeAndUpdateStateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthFabric
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthFabric
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.State == nil {
+				m.State = &State{}
+			}
+			if err := m.State.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
 			}
 			iNdEx = postIndex
 		default:
@@ -7785,6 +8191,44 @@ func (m *VerifyPacketCommitmentRequest) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayTimePeriod", wireType)
+			}
+			m.DelayTimePeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayTimePeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayBlockPeriod", wireType)
+			}
+			m.DelayBlockPeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayBlockPeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Prefix", wireType)
 			}
@@ -7820,7 +8264,7 @@ func (m *VerifyPacketCommitmentRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Proof", wireType)
 			}
@@ -7854,7 +8298,7 @@ func (m *VerifyPacketCommitmentRequest) Unmarshal(dAtA []byte) error {
 				m.Proof = []byte{}
 			}
 			iNdEx = postIndex
-		case 5:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
 			}
@@ -7886,7 +8330,7 @@ func (m *VerifyPacketCommitmentRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.PortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChannelId", wireType)
 			}
@@ -7918,7 +8362,7 @@ func (m *VerifyPacketCommitmentRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.ChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sequence", wireType)
 			}
@@ -7937,7 +8381,7 @@ func (m *VerifyPacketCommitmentRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 8:
+		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CommitmentBytes", wireType)
 			}
@@ -8097,6 +8541,44 @@ func (m *VerifyPacketAcknowledgementRequest) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayTimePeriod", wireType)
+			}
+			m.DelayTimePeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayTimePeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayBlockPeriod", wireType)
+			}
+			m.DelayBlockPeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayBlockPeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Prefix", wireType)
 			}
@@ -8132,7 +8614,7 @@ func (m *VerifyPacketAcknowledgementRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Proof", wireType)
 			}
@@ -8166,7 +8648,7 @@ func (m *VerifyPacketAcknowledgementRequest) Unmarshal(dAtA []byte) error {
 				m.Proof = []byte{}
 			}
 			iNdEx = postIndex
-		case 5:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
 			}
@@ -8198,7 +8680,7 @@ func (m *VerifyPacketAcknowledgementRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.PortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChannelId", wireType)
 			}
@@ -8230,7 +8712,7 @@ func (m *VerifyPacketAcknowledgementRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.ChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sequence", wireType)
 			}
@@ -8249,7 +8731,7 @@ func (m *VerifyPacketAcknowledgementRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 8:
+		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Acknowledgement", wireType)
 			}
@@ -8409,6 +8891,44 @@ func (m *VerifyPacketReceiptAbsenceRequest) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayTimePeriod", wireType)
+			}
+			m.DelayTimePeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayTimePeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayBlockPeriod", wireType)
+			}
+			m.DelayBlockPeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayBlockPeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Prefix", wireType)
 			}
@@ -8444,7 +8964,7 @@ func (m *VerifyPacketReceiptAbsenceRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Proof", wireType)
 			}
@@ -8478,7 +8998,7 @@ func (m *VerifyPacketReceiptAbsenceRequest) Unmarshal(dAtA []byte) error {
 				m.Proof = []byte{}
 			}
 			iNdEx = postIndex
-		case 5:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
 			}
@@ -8510,7 +9030,7 @@ func (m *VerifyPacketReceiptAbsenceRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.PortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChannelId", wireType)
 			}
@@ -8542,7 +9062,7 @@ func (m *VerifyPacketReceiptAbsenceRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.ChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sequence", wireType)
 			}
@@ -8687,6 +9207,44 @@ func (m *VerifyNextSequenceRecvRequest) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayTimePeriod", wireType)
+			}
+			m.DelayTimePeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayTimePeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelayBlockPeriod", wireType)
+			}
+			m.DelayBlockPeriod = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFabric
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelayBlockPeriod |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Prefix", wireType)
 			}
@@ -8722,7 +9280,7 @@ func (m *VerifyNextSequenceRecvRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Proof", wireType)
 			}
@@ -8756,7 +9314,7 @@ func (m *VerifyNextSequenceRecvRequest) Unmarshal(dAtA []byte) error {
 				m.Proof = []byte{}
 			}
 			iNdEx = postIndex
-		case 5:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
 			}
@@ -8788,7 +9346,7 @@ func (m *VerifyNextSequenceRecvRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.PortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ChannelId", wireType)
 			}
@@ -8820,7 +9378,7 @@ func (m *VerifyNextSequenceRecvRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.ChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NextSequenceRecv", wireType)
 			}
