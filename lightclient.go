@@ -8,6 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/store/mem"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/module"
 	clienttypes "github.com/cosmos/ibc-go/modules/core/02-client/types"
 	connectiontypes "github.com/cosmos/ibc-go/modules/core/03-connection/types"
 	channeltypes "github.com/cosmos/ibc-go/modules/core/04-channel/types"
@@ -15,6 +16,7 @@ import (
 	host "github.com/cosmos/ibc-go/modules/core/24-host"
 	"github.com/cosmos/ibc-go/modules/core/exported"
 	pb "github.com/datachainlab/fabric-ibc-lightclientd/types"
+	corda "github.com/hyperledger-labs/yui-corda-ibc/go/x/ibc/light-clients/xx-corda"
 	"github.com/hyperledger-labs/yui-fabric-ibc/example"
 	fabrictypes "github.com/hyperledger-labs/yui-fabric-ibc/x/ibc/light-clients/xx-fabric/types"
 )
@@ -25,6 +27,14 @@ type Lightclient struct {
 	store sdk.KVStore
 	id    string
 	cs    *fabrictypes.ClientState
+}
+
+func init() {
+	ms := []module.AppModuleBasic{corda.AppModuleBasic{}}
+	for _, m := range example.ModuleBasics {
+		ms = append(ms, m)
+	}
+	example.ModuleBasics = module.NewBasicManager(ms...)
 }
 
 func mustParseKeyConsensusState(key []byte) clienttypes.Height {
